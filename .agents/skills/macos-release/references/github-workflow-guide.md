@@ -139,7 +139,7 @@ on:
     types: [published]
 
 env:
-  TAP_REPO: oozoofrog/homebrew-tap
+  TAP_REPO: example/homebrew-tap
   CASK_NAME: frogtray
   APP_NAME: FrogTray
 
@@ -198,7 +198,7 @@ jobs:
             app "$APP_NAME.app"
 
             zap trash: [
-              "~/Library/Preferences/com.oozoofrog.macos.$APP_NAME.plist",
+              "~/Library/Preferences/com.example.macos.$APP_NAME.plist",
             ]
           end
           CASK
@@ -224,7 +224,7 @@ jobs:
 | `APP_NAME` | 앱 이름 | `FrogTray` |
 | `SCHEME` | Xcode 스키마 | `FrogTray` |
 | `PROJECT_DIR` | xcodeproj 상위 디렉토리 | `FrogTray` |
-| `TAP_REPO` | Homebrew tap 리포 | `oozoofrog/homebrew-tap` |
+| `TAP_REPO` | Homebrew tap 리포 | `example/homebrew-tap` |
 | `CASK_NAME` | Cask 파일명 (소문자) | `frogtray` |
 | `HOMEBREW_TAP_TOKEN` | Secret 이름 | 변경 가능 |
 

@@ -6,7 +6,7 @@
 [![Issues](https://img.shields.io/github/issues/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project)
 
-이 저장소는 기존 `oozoofrog-plugins` 작업을 바탕으로 정리한 **Codex 네이티브 작업공간**이며, GitHub 저장소 `oozoofrog/codex-skills-project`를 기준으로 유지됩니다.
+이 저장소는 기존 Claude 계열 plugin/skill 자산을 Codex 기준으로 재구성한 **Codex 네이티브 작업공간**이며, GitHub 저장소 `oozoofrog/codex-skills-project`를 기준으로 유지됩니다.
 
 핵심 원칙은 다음과 같습니다.
 

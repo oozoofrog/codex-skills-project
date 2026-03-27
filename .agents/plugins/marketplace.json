@@ -1,7 +1,7 @@
 {
-  "name": "oozoofrog-local",
+  "name": "codex-skills-local",
   "interface": {
-    "displayName": "oozoofrog Codex Local"
+    "displayName": "Codex Skills Local"
   },
   "plugins": [
     {
@@ -9,8 +9,7 @@
       "description": "Layered AGENTS.md instruction architecture for Codex repositories.",
       "version": "1.4.0",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",
@@ -33,8 +32,7 @@
       "description": "Automate iOS Simulator and macOS apps with baepsae MCP tooling.",
       "version": "1.0.0",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",
@@ -57,8 +55,7 @@
       "description": "Apple platform development with Xcode tools, bundled references, and review workflows.",
       "version": "1.9.2",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",
@@ -82,8 +79,7 @@
       "description": "Extract structured prompts for external GPT and deep research workflows.",
       "version": "1.0.1",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",
@@ -106,8 +102,7 @@
       "description": "Delegate selected tasks to a separate Codex CLI invocation when explicitly requested.",
       "version": "1.1.0",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",
@@ -130,8 +125,7 @@
       "description": "Automate macOS app and CLI release preparation, packaging, and publishing.",
       "version": "1.0.0",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",
@@ -154,8 +148,7 @@
       "description": "Audit Codex plugin, custom-agent, and skill repositories for structural issues.",
       "version": "1.0.1",
       "author": {
-        "name": "oozoofrog",
-        "email": "oozoofrog@gmail.com"
+        "name": "codex-skills-project"
       },
       "source": {
         "source": "local",

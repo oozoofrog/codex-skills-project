@@ -3,8 +3,7 @@
   "version": "1.0.1",
   "description": "Extract structured prompts for external GPT and deep research workflows.",
   "author": {
-    "name": "oozoofrog",
-    "email": "oozoofrog@gmail.com"
+    "name": "codex-skills-project"
   },
   "keywords": [
     "research",
@@ -17,7 +16,7 @@
     "displayName": "GPT Research",
     "shortDescription": "Prepare structured prompts for external research",
     "longDescription": "Collect the right repository context and format it into reusable prompts for external GPT or deep research workflows.",
-    "developerName": "oozoofrog",
+    "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
       "Research",

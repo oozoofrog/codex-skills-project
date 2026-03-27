@@ -3,8 +3,7 @@
   "version": "1.9.2",
   "description": "Apple platform development with Xcode tools, bundled references, and review workflows.",
   "author": {
-    "name": "oozoofrog",
-    "email": "oozoofrog@gmail.com"
+    "name": "codex-skills-project"
   },
   "keywords": [
     "swift",
@@ -18,7 +17,7 @@
     "displayName": "Apple Craft",
     "shortDescription": "Swift, SwiftUI, UIKit, and Xcode support",
     "longDescription": "Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs for current Apple APIs.",
-    "developerName": "oozoofrog",
+    "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
       "Swift",

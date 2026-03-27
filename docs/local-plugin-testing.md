@@ -53,7 +53,7 @@ python3 scripts/run_local_plugin_load_assistant.py --run-smoke
 1. Codex를 현재 저장소 루트에서 다시 시작한다.
 2. repo-level instruction과 skill discovery가 정상인지 확인한다.
 3. local plugin catalog를 다시 읽게 한다.
-4. `oozoofrog Codex Local` 카탈로그 또는 동등한 로컬 plugin 목록에서 plugin이 보이는지 확인한다.
+4. `Codex Skills Local` 카탈로그 또는 동등한 로컬 plugin 목록에서 plugin이 보이는지 확인한다.
 
 ## 4. 설치/활성화 스모크 테스트
 

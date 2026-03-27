@@ -3,8 +3,7 @@
   "version": "1.0.1",
   "description": "Audit Codex plugin, custom-agent, and skill repositories for structural issues.",
   "author": {
-    "name": "oozoofrog",
-    "email": "oozoofrog@gmail.com"
+    "name": "codex-skills-project"
   },
   "keywords": [
     "plugins",
@@ -17,7 +16,7 @@
     "displayName": "Plugin Doctor",
     "shortDescription": "Audit Codex plugin and skill repositories",
     "longDescription": "Validate repo-local skills, optional packaged plugins, marketplace metadata, and custom agents while flagging stale Claude-specific leftovers.",
-    "developerName": "oozoofrog",
+    "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
       "Audit",

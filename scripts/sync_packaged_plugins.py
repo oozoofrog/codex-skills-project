@@ -29,7 +29,7 @@ PLUGIN_SPECS = [
             'displayName': 'Agent Context',
             'shortDescription': 'Layered AGENTS.md design and verification',
             'longDescription': 'Scaffold, validate, and audit layered Codex instruction architectures with root and nested AGENTS.md files plus lightweight supporting docs.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Scaffold', 'Read', 'Write', 'Validate'],
             'defaultPrompt': [
@@ -62,7 +62,7 @@ PLUGIN_SPECS = [
             'displayName': 'App Automation',
             'shortDescription': 'Automate iOS Simulator and macOS apps',
             'longDescription': 'Inspect UI trees, interact with simulator or macOS apps, capture screenshots, and run repeatable automation flows with baepsae.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Automation', 'UI', 'Screenshots', 'MCP'],
             'defaultPrompt': [
@@ -87,7 +87,7 @@ PLUGIN_SPECS = [
             'displayName': 'Apple Craft',
             'shortDescription': 'Swift, SwiftUI, UIKit, and Xcode support',
             'longDescription': 'Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs for current Apple APIs.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Swift', 'Xcode', 'Review', 'Planning'],
             'defaultPrompt': [
@@ -112,7 +112,7 @@ PLUGIN_SPECS = [
             'displayName': 'GPT Research',
             'shortDescription': 'Prepare structured prompts for external research',
             'longDescription': 'Collect the right repository context and format it into reusable prompts for external GPT or deep research workflows.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Research', 'Prompting', 'Context'],
             'defaultPrompt': [
@@ -137,7 +137,7 @@ PLUGIN_SPECS = [
             'displayName': 'Hey Codex',
             'shortDescription': 'Run a separate Codex CLI task on demand',
             'longDescription': 'Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs when the user explicitly asks.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Delegation', 'CLI', 'Review'],
             'defaultPrompt': [
@@ -162,7 +162,7 @@ PLUGIN_SPECS = [
             'displayName': 'macOS Release',
             'shortDescription': 'Prepare and publish macOS releases',
             'longDescription': 'Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Release', 'Build', 'Packaging'],
             'defaultPrompt': [
@@ -187,7 +187,7 @@ PLUGIN_SPECS = [
             'displayName': 'Plugin Doctor',
             'shortDescription': 'Audit Codex plugin and skill repositories',
             'longDescription': 'Validate repo-local skills, optional packaged plugins, marketplace metadata, and custom agents while flagging stale Claude-specific leftovers.',
-            'developerName': 'oozoofrog',
+            'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Audit', 'Validation', 'Metadata'],
             'defaultPrompt': [
@@ -391,8 +391,7 @@ def build_plugin_manifest(spec: dict) -> dict:
         'version': spec['version'],
         'description': spec['description'],
         'author': {
-            'name': 'oozoofrog',
-            'email': 'oozoofrog@gmail.com',
+            'name': 'codex-skills-project',
         },
         'keywords': spec['keywords'],
         'skills': './skills/',
@@ -405,9 +404,9 @@ def build_plugin_manifest(spec: dict) -> dict:
 
 def build_marketplace(specs: list[dict]) -> dict:
     return {
-        'name': 'oozoofrog-local',
+        'name': 'codex-skills-local',
         'interface': {
-            'displayName': 'oozoofrog Codex Local',
+            'displayName': 'Codex Skills Local',
         },
         'plugins': [
             {
@@ -415,8 +414,7 @@ def build_marketplace(specs: list[dict]) -> dict:
                 'description': spec['description'],
                 'version': spec['version'],
                 'author': {
-                    'name': 'oozoofrog',
-                    'email': 'oozoofrog@gmail.com',
+                    'name': 'codex-skills-project',
                 },
                 'source': {
                     'source': 'local',

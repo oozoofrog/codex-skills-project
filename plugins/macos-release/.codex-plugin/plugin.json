@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Automate macOS app and CLI release preparation, packaging, and publishing.",
   "author": {
-    "name": "oozoofrog",
-    "email": "oozoofrog@gmail.com"
+    "name": "codex-skills-project"
   },
   "keywords": [
     "release",
@@ -17,7 +16,7 @@
     "displayName": "macOS Release",
     "shortDescription": "Prepare and publish macOS releases",
     "longDescription": "Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software.",
-    "developerName": "oozoofrog",
+    "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
       "Release",

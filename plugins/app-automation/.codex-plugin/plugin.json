@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Automate iOS Simulator and macOS apps with baepsae MCP tooling.",
   "author": {
-    "name": "oozoofrog",
-    "email": "oozoofrog@gmail.com"
+    "name": "codex-skills-project"
   },
   "keywords": [
     "automation",
@@ -17,7 +16,7 @@
     "displayName": "App Automation",
     "shortDescription": "Automate iOS Simulator and macOS apps",
     "longDescription": "Inspect UI trees, interact with simulator or macOS apps, capture screenshots, and run repeatable automation flows with baepsae.",
-    "developerName": "oozoofrog",
+    "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
       "Automation",

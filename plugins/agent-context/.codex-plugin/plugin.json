@@ -3,8 +3,7 @@
   "version": "1.4.0",
   "description": "Layered AGENTS.md instruction architecture for Codex repositories.",
   "author": {
-    "name": "oozoofrog",
-    "email": "oozoofrog@gmail.com"
+    "name": "codex-skills-project"
   },
   "keywords": [
     "agents-md",
@@ -17,7 +16,7 @@
     "displayName": "Agent Context",
     "shortDescription": "Layered AGENTS.md design and verification",
     "longDescription": "Scaffold, validate, and audit layered Codex instruction architectures with root and nested AGENTS.md files plus lightweight supporting docs.",
-    "developerName": "oozoofrog",
+    "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
       "Scaffold",
