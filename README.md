@@ -6,7 +6,7 @@
 [![Issues](https://img.shields.io/github/issues/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project)
 
-`/Volumes/eyedisk/develop/oozoofrog/oozoofrog-plugins`를 **Codex 네이티브 작업공간**으로 이식한 저장소입니다.
+이 저장소는 기존 `oozoofrog-plugins` 작업을 바탕으로 정리한 **Codex 네이티브 작업공간**이며, GitHub 저장소 `oozoofrog/codex-skills-project`를 기준으로 유지됩니다.
 
 핵심 원칙은 다음과 같습니다.
 
@@ -152,7 +152,9 @@ OpenAI Codex plugin 문서 기준으로 repo marketplace는 `$REPO_ROOT/.agents/
 - “이 repo를 Codex plugin 관점에서 검사해줘” → `plugin-doctor`
 
 
-- live capture 갱신: `python3 scripts/update_live_capture_assets.py /path/to/codex-live-capture.png`
+### 라이브 캡처 갱신
+
+- `python3 scripts/update_live_capture_assets.py /path/to/codex-live-capture.png`
 
 
 ## License
