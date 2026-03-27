@@ -2,7 +2,14 @@
 
 ## Repository purpose
 
-이 디렉토리는 **Codex 네이티브 스킬 작업 공간**입니다. Claude용 플러그인 구조를 그대로 복제하지 말고, Codex 공식 문서 기준으로 `.agents/skills` 중심 구조를 유지하세요.
+이 저장소는 **전역 설치 가능한 Codex 스킬 소스 저장소**입니다.
+
+- 스킬 authoring source는 `.agents/skills/`
+- 실제 사용 경로는 `~/.codex/skills/`
+- 설치 정책은 `scripts/install_global_skills.py` + `scripts/global_skills_manifest.json`
+- repo-local `AGENTS.md`, `.codex/agents`, `plugins/`는 개발/검증용 보조 레이어
+
+즉, 이 repo를 수정할 때는 항상 **“이 변경이 전역 설치 후에도 자연스럽게 동작하는가?”**를 먼저 기준으로 삼으세요.
 
 ## Working rules
 
@@ -10,20 +17,24 @@
 - 스킬 이름은 kebab-case를 사용합니다.
 - `SKILL.md` frontmatter에는 최소 `name`, `description`을 넣습니다.
 - 긴 설명은 `references/`로 분리하고, `SKILL.md` 본문은 핵심 절차만 유지합니다.
-- `agents/openai.yaml`를 쓰는 경우 SKILL.md와 의미가 어긋나지 않도록 같이 갱신합니다.
-- 스킬 디렉토리 안에는 README.md 같은 보조 문서를 추가하지 않습니다.
-- 스킬 구조나 메타데이터를 바꿨다면 마지막에 `codex-skill-audit` 기준으로 자체 점검합니다.
+- 스킬이 sibling reference를 사용하면 `scripts/global_skills_manifest.json`에 `dependencies`를 선언합니다.
+- 전역 이름 충돌 가능성이 있으면 manifest에 `install_name` alias를 추가하거나, 의도적으로 source 이름을 조정합니다.
+- 스킬은 **copy 또는 symlink로 `~/.codex/skills`에 설치되었을 때도** 깨지지 않아야 합니다.
+- `.codex/agents`는 전역 설치 대상이 아니므로, 특정 프로젝트 전용 자산처럼 다룹니다.
+- plugin 패키징 구조를 바꿀 때도 `.agents/skills`가 여전히 source of truth인지 유지합니다.
 
 ## Preferred workflow
 
-1. 공식 Codex 문서를 먼저 확인한다.
-2. 기존 스킬과 중복되지 않는지 확인한다.
-3. 가장 작은 단위의 스킬부터 만든다.
-4. 필요할 때만 `references/`, `scripts/`, `assets/`를 추가한다.
-5. 변경 후 감사 스크립트로 구조 점검을 실행한다.
+1. 먼저 `.agents/skills/<skill>/SKILL.md`와 관련 references/scripts를 수정한다.
+2. 필요하면 `scripts/global_skills_manifest.json`의 dependency / alias를 같이 갱신한다.
+3. `python3 scripts/install_global_skills.py --dry-run`으로 설치 계획을 확인한다.
+4. 필요하면 `python3 scripts/install_global_skills.py --dest /tmp/codex-skills-test --mode copy --overwrite`로 테스트 설치한다.
+5. 마지막에 `codex-skill-audit` 기준 구조 점검을 실행한다.
+6. plugin 관련 변경이 있으면 별도로 `scripts/sync_packaged_plugins.py`와 smoke check를 실행한다.
 
 ## Output style
 
 - 저장소 문서는 한국어 우선
 - 파일 경로, 명령어, 식별자, API 이름은 원문 유지
-- README에는 사용 예시를 남기되, 스킬 디렉토리 내부 문서는 최소화
+- README는 전역 설치 사용자 흐름을 먼저 설명
+- repo-local 실행법은 개발/검증용 보조 흐름으로 설명
