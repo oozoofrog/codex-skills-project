@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "source": "agent-context-guide"
+    },
+    {
+      "source": "agent-context-init",
+      "dependencies": [
+        "agent-context-guide"
+      ]
+    },
+    {
+      "source": "agent-context-verify",
+      "dependencies": [
+        "agent-context-guide"
+      ]
+    },
+    {
+      "source": "agent-context-audit"
+    },
+    {
+      "source": "app-automation"
+    },
+    {
+      "source": "apple-craft"
+    },
+    {
+      "source": "apple-harness"
+    },
+    {
+      "source": "apple-review",
+      "dependencies": [
+        "apple-craft"
+      ]
+    },
+    {
+      "source": "codex-skill-audit"
+    },
+    {
+      "source": "codex-skill-bootstrap"
+    },
+    {
+      "source": "gpt-research"
+    },
+    {
+      "source": "hey-codex"
+    },
+    {
+      "source": "macos-release",
+      "install_name": "ooz-macos-release",
+      "alias_reason": "Codex 기본 제공 `macos-release` 스킬과의 이름 충돌을 피하기 위한 별칭입니다."
+    },
+    {
+      "source": "plugin-doctor",
+      "dependencies": [
+        "codex-skill-audit"
+      ]
+    }
+  ]
+}
