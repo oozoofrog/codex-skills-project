@@ -7,6 +7,7 @@
 - 스킬 authoring source는 `.agents/skills/`
 - 실제 사용 경로는 `~/.codex/skills/`
 - 설치 정책은 `scripts/install_global_skills.py` + `scripts/global_skills_manifest.json`
+- 사용자용 진입점은 가능하면 `./install.sh`
 - repo-local `AGENTS.md`, `.codex/agents`, `plugins/`는 개발/검증용 보조 레이어
 
 즉, 이 repo를 수정할 때는 항상 **“이 변경이 전역 설치 후에도 자연스럽게 동작하는가?”**를 먼저 기준으로 삼으세요.
@@ -21,6 +22,7 @@
 - 전역 이름 충돌 가능성이 있으면 manifest에 `install_name` alias를 추가하거나, 의도적으로 source 이름을 조정합니다.
 - 스킬은 **기본적으로 copy 방식으로 `~/.codex/skills`에 설치되었을 때** 자연스럽게 동작해야 합니다.
 - `symlink` 모드는 개발 편의용 보조 옵션으로만 취급합니다.
+- 사용자 문서에서는 가능하면 `python3 scripts/...`보다 `./install.sh`를 먼저 안내합니다.
 - `.codex/agents`는 전역 설치 대상이 아니므로, 특정 프로젝트 전용 자산처럼 다룹니다.
 - plugin 패키징 구조를 바꿀 때도 `.agents/skills`가 여전히 source of truth인지 유지합니다.
 

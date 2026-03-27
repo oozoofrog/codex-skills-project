@@ -16,13 +16,12 @@
 
 즉, 이 저장소는 “repo-local workspace 자체”보다 **전역 스킬 배포 원본**에 더 가깝게 운영합니다.
 
-## 빠른 시작
+## 가장 쉬운 설치
 
 ```bash
 git clone https://github.com/oozoofrog/codex-skills-project.git
 cd codex-skills-project
-python3 scripts/install_global_skills.py --list
-python3 scripts/install_global_skills.py
+./install.sh
 ```
 
 설치가 끝나면 **Codex를 재시작**하세요.
@@ -30,15 +29,43 @@ python3 scripts/install_global_skills.py
 기본 설치 모드는 `copy`입니다.  
 즉, `~/.codex/skills` 아래에 **직접 복사된 전역 스킬**이 생깁니다.
 
+업데이트도 같은 방식입니다.
+
+```bash
+cd codex-skills-project
+git pull
+./install.sh
+```
+
+macOS에서 터미널 명령보다 더 직관적인 방식을 원하면:
+
+- Finder에서 `install.command`를 더블클릭
+
 원본 저장소와 연결된 개발용 설치가 정말 필요할 때만 다음처럼 `symlink`를 명시적으로 사용하세요.
 
 ```bash
 python3 scripts/install_global_skills.py --mode symlink --overwrite
 ```
 
-## 설치 스크립트
+## 설치 방식
 
-전역 설치는 `scripts/install_global_skills.py`가 담당합니다.
+### 일반 사용자
+
+이 저장소를 쓰는 대부분의 경우는 아래만 기억하면 됩니다.
+
+```bash
+./install.sh
+```
+
+이 명령은 내부적으로 다음을 수행합니다.
+
+- 전역 스킬을 `copy` 방식으로 설치
+- 기존 이 저장소 버전이 있으면 덮어쓰기
+- 설치가 끝나면 Codex 재시작만 남김
+
+### 고급 사용자 / 수동 제어
+
+더 세밀한 제어가 필요할 때만 `scripts/install_global_skills.py`를 직접 사용하세요.
 
 기본 대상 경로:
 
@@ -59,7 +86,7 @@ python3 scripts/install_global_skills.py --mode symlink --overwrite
 #### 1. 전체 스킬 설치
 
 ```bash
-python3 scripts/install_global_skills.py
+./install.sh
 ```
 
 기본값이 `copy`이므로 전역 스킬 디렉토리에 실제 파일이 복사됩니다.
