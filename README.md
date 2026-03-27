@@ -147,3 +147,8 @@ OpenAI Codex plugin 문서 기준으로 repo marketplace는 `$REPO_ROOT/.agents/
 
 
 - live capture 갱신: `python3 scripts/update_live_capture_assets.py /path/to/codex-live-capture.png`
+
+
+## License
+
+MIT
