@@ -1,5 +1,11 @@
 # codex-skills-project
 
+[![GitHub Repo](https://img.shields.io/badge/GitHub-oozoofrog/codex--skills--project-181717?logo=github)](https://github.com/oozoofrog/codex-skills-project)
+[![Release](https://img.shields.io/github/v/release/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Issues](https://img.shields.io/github/issues/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/issues)
+[![Repo Size](https://img.shields.io/github/repo-size/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project)
+
 `/Volumes/eyedisk/develop/oozoofrog/oozoofrog-plugins`를 **Codex 네이티브 작업공간**으로 이식한 저장소입니다.
 
 핵심 원칙은 다음과 같습니다.
