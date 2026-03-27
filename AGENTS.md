@@ -19,7 +19,8 @@
 - 긴 설명은 `references/`로 분리하고, `SKILL.md` 본문은 핵심 절차만 유지합니다.
 - 스킬이 sibling reference를 사용하면 `scripts/global_skills_manifest.json`에 `dependencies`를 선언합니다.
 - 전역 이름 충돌 가능성이 있으면 manifest에 `install_name` alias를 추가하거나, 의도적으로 source 이름을 조정합니다.
-- 스킬은 **copy 또는 symlink로 `~/.codex/skills`에 설치되었을 때도** 깨지지 않아야 합니다.
+- 스킬은 **기본적으로 copy 방식으로 `~/.codex/skills`에 설치되었을 때** 자연스럽게 동작해야 합니다.
+- `symlink` 모드는 개발 편의용 보조 옵션으로만 취급합니다.
 - `.codex/agents`는 전역 설치 대상이 아니므로, 특정 프로젝트 전용 자산처럼 다룹니다.
 - plugin 패키징 구조를 바꿀 때도 `.agents/skills`가 여전히 source of truth인지 유지합니다.
 

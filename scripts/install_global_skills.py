@@ -281,8 +281,8 @@ def main() -> int:
     parser.add_argument(
         '--mode',
         choices=['copy', 'symlink'],
-        default='symlink',
-        help='설치 방식 (기본값: symlink)',
+        default='copy',
+        help='설치 방식 (기본값: copy)',
     )
     parser.add_argument(
         '--overwrite',

@@ -27,13 +27,13 @@ python3 scripts/install_global_skills.py
 
 설치가 끝나면 **Codex를 재시작**하세요.
 
-기본 설치 모드는 `symlink`입니다.  
-즉, 이 저장소를 계속 수정하면서 전역 스킬 원본으로 바로 쓸 수 있습니다.
+기본 설치 모드는 `copy`입니다.  
+즉, `~/.codex/skills` 아래에 **직접 복사된 전역 스킬**이 생깁니다.
 
-스냅샷 복사가 필요하면:
+원본 저장소와 연결된 개발용 설치가 정말 필요할 때만 다음처럼 `symlink`를 명시적으로 사용하세요.
 
 ```bash
-python3 scripts/install_global_skills.py --mode copy --overwrite
+python3 scripts/install_global_skills.py --mode symlink --overwrite
 ```
 
 ## 설치 스크립트
@@ -49,7 +49,8 @@ python3 scripts/install_global_skills.py --mode copy --overwrite
 - 전체 스킬 일괄 설치
 - 특정 스킬만 선택 설치
 - 의존 스킬 자동 포함
-- `copy` / `symlink` 모드 지원
+- 기본 `copy` 설치
+- 필요 시 명시적 `symlink` 모드 지원
 - 이름 충돌 회피용 install alias 지원
 - `--dry-run` 계획 확인
 
@@ -60,6 +61,8 @@ python3 scripts/install_global_skills.py --mode copy --overwrite
 ```bash
 python3 scripts/install_global_skills.py
 ```
+
+기본값이 `copy`이므로 전역 스킬 디렉토리에 실제 파일이 복사됩니다.
 
 #### 2. 특정 스킬만 설치
 
@@ -81,7 +84,13 @@ python3 scripts/install_global_skills.py --dry-run
 python3 scripts/install_global_skills.py --dest /tmp/codex-skills-test --mode copy
 ```
 
-#### 5. 설치 목록 보기
+#### 5. 개발용 symlink 설치
+
+```bash
+python3 scripts/install_global_skills.py --mode symlink --overwrite
+```
+
+#### 6. 설치 목록 보기
 
 ```bash
 python3 scripts/install_global_skills.py --list
@@ -181,7 +190,7 @@ codex-skills-project/
 - `.codex/agents` 실험
 - packaged plugin 테스트
 
-즉, repo-local 실행은 **개발자 워크벤치**이고, 최종 사용 경험은 **전역 설치**가 목표입니다.
+즉, repo-local 실행은 **개발자 워크벤치**이고, 최종 사용 경험은 **복사 기반 전역 설치**가 목표입니다.
 
 ## 보조 레이어
 
