@@ -21,6 +21,103 @@
 - AGENTS.md: https://developers.openai.com/codex/guides/agents-md
 - Plugins: https://developers.openai.com/codex/plugins
 - Subagents: https://developers.openai.com/codex/subagents
+- Codex with ChatGPT plan: https://help.openai.com/en/articles/11369540-codex-in-chatgpt
+- Codex app announcement: https://openai.com/index/introducing-the-codex-app/
+- Skills in ChatGPT: https://help.openai.com/en/articles/20001066-skills-in-chatgpt
+
+## 어디서 사용할 수 있나
+
+OpenAI 공식 문서 기준으로, **Codex 자체는** 다음 표면에서 사용할 수 있습니다.
+
+- Codex CLI
+- Codex IDE extension
+- Codex app
+- Codex web
+
+출처:
+- OpenAI Help Center의 Codex 사용 안내는 Codex를 terminal, IDE, Codex app, web에서 사용할 수 있다고 설명합니다.
+- OpenAI의 Codex app 소개 글은 Codex를 app, CLI, IDE, cloud에서 사용할 수 있다고 설명합니다.
+
+### 이 저장소를 바로 쓰기 좋은 환경
+
+이 저장소의 구조는 다음 파일들을 전제로 합니다.
+
+- `.agents/skills/`
+- `AGENTS.md`
+- `.codex/agents/`
+- `plugins/`
+
+따라서 **로컬 저장소를 직접 열 수 있는 Codex 표면**에서 가장 잘 맞습니다.
+
+권장:
+- **Codex CLI**
+- **Codex app**
+- **Codex IDE extension**에서 이 저장소를 직접 연 경우
+
+### 일반 ChatGPT에서도 되나요?
+
+여기서는 구분이 필요합니다.
+
+1. **Codex와 연결된 표면**
+   - CLI / app / IDE / web
+   - 이 저장소처럼 repo-local 구조를 활용하기 좋음
+
+2. **일반 ChatGPT의 Skills 기능**
+   - Help Center 기준으로 ChatGPT에도 Skills 기능이 있고, Skills는 Codex와 API에서도 지원됩니다.
+   - 하지만 문서에도 나오듯 **제품 간 자동 동기화는 아직 되지 않습니다.**
+
+따라서, **이 저장소를 있는 그대로 일반 ChatGPT 대화창이 자동으로 읽는다고 보면 안 됩니다.**
+
+이 부분은 공식 문서의 “skills do not sync across products yet” 설명과 repo-local discovery 구조를 바탕으로 한 **실무적 해석**입니다.
+
+즉:
+- **Codex CLI / Codex app / Codex IDE** → 바로 사용하기 좋음
+- **일반 ChatGPT Skills** → 별도 업로드/변환/설치 흐름이 필요
+
+## 빠른 시작
+
+### 1. 가장 추천하는 방법: Codex CLI
+
+이 저장소를 clone한 뒤 루트에서 Codex를 실행합니다.
+
+```bash
+git clone https://github.com/oozoofrog/codex-skills-project.git
+cd codex-skills-project
+codex
+```
+
+그 다음 다음처럼 요청하면 됩니다.
+
+```text
+이 저장소의 skill 구조를 설명해줘
+apple-craft 사용법 알려줘
+plugin-doctor로 이 저장소 점검해줘
+```
+
+### 2. Codex app
+
+Codex app에서 이 저장소 폴더를 project/workspace로 엽니다.
+
+그 후:
+- repo root가 이 저장소인지 확인
+- `AGENTS.md`와 `.agents/skills`가 로드되는지 확인
+- 필요하면 `docs/local-plugin-testing.md` 절차대로 smoke check 수행
+
+### 3. Codex IDE extension
+
+VS Code / Cursor / Windsurf 등에서 이 저장소를 열고 Codex를 연결합니다.
+
+핵심 조건:
+- 작업 디렉토리가 repo root 안에 있어야 함
+- `.agents/skills/`와 `AGENTS.md`가 현재 repo 기준으로 보이는 상태여야 함
+
+### 4. Codex web / cloud
+
+Codex web도 공식 지원 표면이지만, 이 저장소처럼 **로컬 repo 구조에 의존하는 skill workspace**는 CLI/app/IDE보다 설명 가능성이 낮습니다.
+
+즉, Codex web 자체는 지원되더라도 이 저장소의 repo-local discovery 경험은 **로컬 checkout 기반 표면**이 더 자연스럽습니다.
+
+이 부분은 제품 문서와 repo-local 구조 특성을 바탕으로 한 **실무 권장**입니다.
 
 ## 현재 구조
 
