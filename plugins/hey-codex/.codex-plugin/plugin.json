@@ -1,0 +1,41 @@
+{
+  "name": "hey-codex",
+  "version": "1.1.0",
+  "description": "Delegate selected tasks to a separate Codex CLI invocation when explicitly requested.",
+  "author": {
+    "name": "oozoofrog",
+    "email": "oozoofrog@gmail.com"
+  },
+  "keywords": [
+    "codex",
+    "delegation",
+    "cli",
+    "review"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Hey Codex",
+    "shortDescription": "Run a separate Codex CLI task on demand",
+    "longDescription": "Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs when the user explicitly asks.",
+    "developerName": "oozoofrog",
+    "category": "Productivity",
+    "capabilities": [
+      "Delegation",
+      "CLI",
+      "Review"
+    ],
+    "defaultPrompt": [
+      "Ask a separate Codex CLI run for a second opinion on this refactor.",
+      "Run a read-only Codex review on the current branch.",
+      "Delegate this task to another Codex process and summarize the result."
+    ],
+    "brandColor": "#F97316",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": [
+      "./assets/screenshot.png",
+      "./assets/browser-capture.png",
+      "./assets/live-capture.png"
+    ]
+  }
+}

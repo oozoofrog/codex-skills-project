@@ -1,0 +1,43 @@
+{
+  "name": "app-automation",
+  "version": "1.0.0",
+  "description": "Automate iOS Simulator and macOS apps with baepsae MCP tooling.",
+  "author": {
+    "name": "oozoofrog",
+    "email": "oozoofrog@gmail.com"
+  },
+  "keywords": [
+    "automation",
+    "simulator",
+    "macos",
+    "baepsae"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "App Automation",
+    "shortDescription": "Automate iOS Simulator and macOS apps",
+    "longDescription": "Inspect UI trees, interact with simulator or macOS apps, capture screenshots, and run repeatable automation flows with baepsae.",
+    "developerName": "oozoofrog",
+    "category": "Productivity",
+    "capabilities": [
+      "Automation",
+      "UI",
+      "Screenshots",
+      "MCP"
+    ],
+    "defaultPrompt": [
+      "Analyze the current simulator UI tree and tell me what is visible.",
+      "Launch the app in the booted simulator and capture a screenshot.",
+      "Automate a login flow and report where it fails."
+    ],
+    "brandColor": "#0EA5E9",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": [
+      "./assets/screenshot.png",
+      "./assets/browser-capture.png",
+      "./assets/live-capture.png"
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

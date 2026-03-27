@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" fill="none">
+  <defs>
+    <linearGradient id="panel" x1="64" y1="64" x2="1320" y2="756" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A5B4FC" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#6366F1" stop-opacity="0.12"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="820" rx="40" fill="#020617"/>
+  <rect x="40" y="40" width="1320" height="740" rx="32" fill="url(#panel)"/>
+  <rect x="72" y="72" width="280" height="280" rx="52" fill="#6366F1"/>
+  <text x="212" y="240" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="110" font-weight="800" fill="white">PD</text>
+  <text x="396" y="162" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="74" font-weight="800" fill="white">Plugin Doctor</text>
+  <text x="396" y="216" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="30" font-weight="600" fill="#D6E4FF">Audit Codex plugin and skill repositories</text>
+  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Validate repo-local skills, optional packaged plugins, marketplace metadata, and custom agents while flagging stale Claude-specific leftovers.</text>
+  <rect x="396" y="102" width="120" height="36" rx="18" fill="#A5B4FC" fill-opacity="0.16"/><text x="414" y="126" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Audit</text>
+  <rect x="396" y="150" width="120" height="36" rx="18" fill="#A5B4FC" fill-opacity="0.16"/><text x="414" y="174" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Validation</text>
+  <rect x="396" y="198" width="120" height="36" rx="18" fill="#A5B4FC" fill-opacity="0.16"/><text x="414" y="222" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Metadata</text>
+  <rect x="72" y="414" width="1256" height="314" rx="28" fill="white" fill-opacity="0.08"/>
+  <text x="112" y="474" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="28" font-weight="700" fill="white">Representative workflows</text>
+  <text x="112" y="532" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#E2E8F0">• Marketplace ↔ package cross-checks</text>
+  <text x="112" y="580" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#E2E8F0">• Manifest, asset, and path validation</text>
+  <text x="112" y="628" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#E2E8F0">• Claude artifact drift detection</text>
+  <text x="112" y="694" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="18" font-weight="500" fill="#94A3B8">Generated from repo-local Codex skills • local packaging preview</text>
+</svg>

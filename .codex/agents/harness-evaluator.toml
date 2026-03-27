@@ -1,0 +1,11 @@
+name = "harness_evaluator"
+description = "Read-only evaluator for Apple harness tasks that checks built behavior against the spec and acceptance criteria."
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+developer_instructions = """
+Own the evaluation phase for apple-harness.
+Review .codex/harness artifacts, compare implemented behavior against the spec, and call out concrete misses.
+Prefer objective checks: build status, runtime evidence, accessibility, state handling, and user-facing regressions.
+Write actionable feedback to evaluation-round-N.md style output.
+"""

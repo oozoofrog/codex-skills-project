@@ -1,0 +1,42 @@
+{
+  "name": "agent-context",
+  "version": "1.4.0",
+  "description": "Layered AGENTS.md instruction architecture for Codex repositories.",
+  "author": {
+    "name": "oozoofrog",
+    "email": "oozoofrog@gmail.com"
+  },
+  "keywords": [
+    "agents-md",
+    "context",
+    "documentation",
+    "architecture"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Context",
+    "shortDescription": "Layered AGENTS.md design and verification",
+    "longDescription": "Scaffold, validate, and audit layered Codex instruction architectures with root and nested AGENTS.md files plus lightweight supporting docs.",
+    "developerName": "oozoofrog",
+    "category": "Productivity",
+    "capabilities": [
+      "Scaffold",
+      "Read",
+      "Write",
+      "Validate"
+    ],
+    "defaultPrompt": [
+      "Analyze this repository and propose a layered AGENTS.md structure.",
+      "Scaffold AGENTS.md and nested instruction files for this repo.",
+      "Verify whether the current AGENTS.md files still match the codebase."
+    ],
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": [
+      "./assets/screenshot.png",
+      "./assets/browser-capture.png",
+      "./assets/live-capture.png"
+    ]
+  }
+}

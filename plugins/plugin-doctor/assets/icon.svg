@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="g" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A5B4FC"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0F172A"/>
+  <rect x="36" y="36" width="440" height="440" rx="88" fill="url(#g)"/>
+  <rect x="72" y="72" width="368" height="368" rx="68" fill="white" fill-opacity="0.12"/>
+  <text x="256" y="294" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="168" font-weight="800" fill="white">PD</text>
+  <rect x="126" y="348" width="260" height="52" rx="26" fill="#0F172A" fill-opacity="0.22"/>
+  <text x="256" y="381" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="24" font-weight="700" fill="white">Plugin Doctor</text>
+</svg>

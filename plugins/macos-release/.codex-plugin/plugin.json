@@ -1,0 +1,41 @@
+{
+  "name": "macos-release",
+  "version": "1.0.0",
+  "description": "Automate macOS app and CLI release preparation, packaging, and publishing.",
+  "author": {
+    "name": "oozoofrog",
+    "email": "oozoofrog@gmail.com"
+  },
+  "keywords": [
+    "release",
+    "macos",
+    "packaging",
+    "homebrew"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "macOS Release",
+    "shortDescription": "Prepare and publish macOS releases",
+    "longDescription": "Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software.",
+    "developerName": "oozoofrog",
+    "category": "Productivity",
+    "capabilities": [
+      "Release",
+      "Build",
+      "Packaging"
+    ],
+    "defaultPrompt": [
+      "Prepare a dry-run release plan for this macOS app.",
+      "Review this repository for missing release automation steps.",
+      "Set up a release script for build, DMG, GitHub Release, and Homebrew."
+    ],
+    "brandColor": "#EF4444",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": [
+      "./assets/screenshot.png",
+      "./assets/browser-capture.png",
+      "./assets/live-capture.png"
+    ]
+  }
+}
