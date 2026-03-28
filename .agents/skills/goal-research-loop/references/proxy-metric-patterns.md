@@ -25,6 +25,7 @@ primary metric은 총점 또는 핵심 축 통과 개수로 둡니다.
 | 축 | 질문 | evidence 예시 |
 |---|---|---|
 | trigger clarity | 언제 쓰고 언제 쓰지 말아야 하는가가 분명한가 | `description`, fit section, adjacent skill 구분 |
+| operator routing | 운영자가 바로 시작하고 멈출 수 있는가 | `When to use`, `Do not use when`, `Quick start`, `Output expectation` 섹션 |
 | contract readiness | 바로 contract를 쓸 수 있는가 | contract template, mode guide |
 | evidence discipline | keep/revert 판단을 뒷받침할 기록 형식이 있는가 | ledger columns, status vocabulary |
 | operator usability | 다음 라운드를 바로 이어갈 수 있는가 | quick start, example flow, escalation rule |
