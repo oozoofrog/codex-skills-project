@@ -173,6 +173,7 @@ python3 scripts/install_global_skills.py --list
 - `codex-skill-audit`
 - `codex-skill-bootstrap`
 - `gpt-research`
+- `goal-research-loop`
 - `hey-codex`
 - `plugin-doctor`
 
@@ -195,6 +196,7 @@ codex-skills-project/
 │       ├── codex-skill-audit/
 │       ├── codex-skill-bootstrap/
 │       ├── gpt-research/
+│       ├── goal-research-loop/
 │       ├── hey-codex/
 │       ├── macos-release/
 │       └── plugin-doctor/

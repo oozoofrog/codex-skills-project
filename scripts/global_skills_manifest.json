@@ -44,6 +44,9 @@
       "source": "gpt-research"
     },
     {
+      "source": "goal-research-loop"
+    },
+    {
       "source": "hey-codex"
     },
     {
