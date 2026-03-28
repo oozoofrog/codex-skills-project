@@ -82,8 +82,10 @@ python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py [targ
 - 공통 기준: `../../../docs/review-harness.md`
 - generator: 상위 스킬이 만든 skill 구조/metadata 변경
 - evaluator: 이 스킬 자체와 `audit_codex_skill_repo.py`가 evaluator-native 감사 역할을 수행한다
+- 평가축: 구조 적합성, discovery readiness, frontmatter 품질, `openai.yaml` 정합성, review harness 선언 적절성
 - artifacts/evidence: deterministic audit report, frontmatter, 경로 구조, metadata consistency
 - pass condition: `critical` 구조 문제 없이 discovery 가능한 상태여야 한다
+- 자동 다음 행동: `pass`면 종료, `warning`이면 문서/메타데이터 정리, `critical`이면 `codex-skill-bootstrap` 기준으로 구조를 재정비한 뒤 재감사한다
 
 ## Output expectation
 

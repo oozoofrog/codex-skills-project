@@ -31,5 +31,7 @@ description: Apple 플랫폼 관점의 코드·PR 리뷰를 수행합니다. Swi
 - 공통 기준: `../../../docs/review-harness.md`
 - generator: 상위 구현, PR diff, 또는 대상 Swift 코드
 - evaluator: 이 스킬 자체가 evaluator-native Apple review 역할을 수행한다
+- 평가축: correctness, lifecycle, concurrency, state management, test/accessibility 누락
 - artifacts/evidence: 파일 경로, diagnostics, build 결과, concurrency/lifecycle/accessibility 근거
 - pass condition: 모든 finding이 실제 증거와 연결되고 severity가 과장되지 않아야 한다
+- 자동 다음 행동: `pass`면 findings 없음으로 종료, `warning`이면 수정 제안, `critical`이면 block finding으로 반환하고 구현 스킬에 수정을 요구한다
