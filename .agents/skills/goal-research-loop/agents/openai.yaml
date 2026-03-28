@@ -1,6 +1,6 @@
 interface:
   display_name: "Goal Research Loop"
-  short_description: "Run a bounded research loop with contract, ledger, and handoff discipline"
-  default_prompt: "Given a concrete objective, define a measurable evaluation contract, choose design/guided/autonomous mode, run a bounded research loop, maintain a ledger and state snapshot, and make evidence-based keep/revert/pivot decisions."
+  short_description: "Run a bounded research loop with contract, ledger, handoff, and explicit decision layers"
+  default_prompt: "Given a concrete objective, define a measurable evaluation contract, separate hard gates, experiment status, and control action, then run a bounded research loop with a ledger and state snapshot."
 policy:
   allow_implicit_invocation: false

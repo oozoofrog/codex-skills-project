@@ -29,6 +29,7 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 - `autonomous-loop`는 사용자 opt-in, bounded surface, 명확한 stop rule이 모두 있을 때만 사용합니다.
 - 같은 실패 패턴이 2회 이상 반복되면 `refine` 대신 `pivot`, `rescope`, `escalate`를 우선 검토합니다.
 - 반복 세션이나 `autonomous-loop`에서는 **baseline / best-known state / active hypothesis / next candidates**를 담은 state snapshot을 유지합니다.
+- **hard gate 결과**, **실험 결과 상태**, **루프 제어 상태**를 한 칸에 섞어 쓰지 않습니다.
 
 ## Modes
 
@@ -41,19 +42,23 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 
 - `references/fit-and-mode-routing.md`
 - `references/loop-contract.md`
+- `references/decision-layers-and-status-mapping.md`
 - `references/iteration-heuristics.md`
 - `references/proxy-metric-patterns.md`
 - `references/result-ledger-template.md`
 - `references/state-snapshot-and-handoff.md`
+- `references/worked-example-skill-improvement.md`
 
 ## Quick start
 
 1. `fit-and-mode-routing.md`로 **이 스킬이 맞는지**와 mode를 먼저 고릅니다.
 2. `loop-contract.md` 템플릿으로 계약을 쓰고 baseline을 확보합니다.
-3. metric이 정량이 아니면 `proxy-metric-patterns.md`로 rubric을 먼저 고릅니다.
-4. 반복 세션이면 `state-snapshot-and-handoff.md` 템플릿으로 best-known state와 다음 후보를 먼저 잡습니다.
-5. 한 라운드에 가설 하나만 실행하고 `result-ledger-template.md` 형식으로 기록합니다.
-6. 결과는 `keep / discard / crash / pivot / rescope / escalate / stop` 중 하나로 닫습니다.
+3. `decision-layers-and-status-mapping.md`로 **gate / experiment status / control action** 층위를 먼저 맞춥니다.
+4. metric이 정량이 아니면 `proxy-metric-patterns.md`로 rubric을 먼저 고릅니다.
+5. 반복 세션이면 `state-snapshot-and-handoff.md` 템플릿으로 best-known state와 다음 후보를 먼저 잡습니다.
+6. 처음 운영하면 `worked-example-skill-improvement.md`로 contract → ledger → snapshot 연결 예시를 한번 봅니다.
+7. 한 라운드에 가설 하나만 실행하고 `result-ledger-template.md` 형식으로 기록합니다.
+8. 각 라운드는 **hard gate 결과 + experiment status + control action**으로 닫습니다.
 
 ## Workflow
 
@@ -76,7 +81,7 @@ description: Use this skill when the user explicitly wants a goal-directed resea
    - 2회 이상 같은 실패가 반복되면 `refine` 대신 `pivot`, `rescope`, `escalate`를 우선 검토합니다.
 6. **Maintain a ledger**
    - 각 실험은 `result-ledger-template.md` 형식으로 남깁니다.
-   - baseline, keep, discard, crash, pivot, rescope, escalate, stop을 구분합니다.
+   - hard gate는 `pass/fail`, experiment status는 `keep/discard/crash`, control action은 `pass/refine/pivot/rescope/escalate/stop`으로 분리합니다.
 7. **Stop cleanly**
    - 목표 달성, 예산 소진, 반복 정체, 사용자 중단, 리스크 증가 중 하나가 발생하면 종료합니다.
    - 마지막에는 현재 best state, 남은 리스크, 다음 실험 후보를 요약합니다.
@@ -91,8 +96,8 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 ## Operating artifacts
 
 - **Research contract** — objective, metric, mutable surface, budget, stop rule
-- **Result ledger** — 각 라운드의 hypothesis / evidence / keep-revert 판단
-- **State snapshot** — baseline, current best state, active hypothesis, open risks, next candidates
+- **Result ledger** — 각 라운드의 hypothesis / evidence / hard gate / experiment status / control action
+- **State snapshot** — baseline, current best state, active hypothesis, open risks, next candidates, most recent control action
 - **Evidence bundle** — 실행 로그, 조사 링크, 비교표, diff 등 evaluator가 다시 읽을 수 있는 근거
 
 장기 루프일수록 “무엇을 했는가”보다 **다음 세션이 바로 이어받을 수 있는 상태 표현**이 더 중요합니다.
@@ -100,10 +105,10 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 ## Review Harness
 - mode: required
 - 공통 기준: `../../../docs/review-harness.md`
-- planner: objective, metric, mutable surface, budget, stop rule을 계약으로 먼저 정한다
-- generator: 가설을 하나씩 실행하고 결과를 ledger에 기록하며 keep/revert를 수행한다
-- evaluator: contract 대비 hard gate, metric, evidence 품질, 반복 discipline, 상태 연속성을 독립적으로 점검한다
-- 평가축: 목표 명확성, 평가 가능성, evidence 품질, keep/revert 정당성, 반복 전략의 건전성, 세션 간 상태 연속성
+- planner: objective, metric, mutable surface, budget, stop rule과 decision layer 구분을 계약으로 먼저 정한다
+- generator: 가설을 하나씩 실행하고 결과를 ledger에 기록하며 experiment status와 control action을 분리한다
+- evaluator: contract 대비 hard gate, metric, evidence 품질, 반복 discipline, decision layer 일관성, 상태 연속성을 독립적으로 점검한다
+- 평가축: 목표 명확성, 평가 가능성, evidence 품질, keep/revert 정당성, 반복 전략의 건전성, decision layer 일관성, 세션 간 상태 연속성
 - artifacts/evidence: loop contract, baseline, experiment ledger, state snapshot, 실행 로그 또는 조사 근거, 최종 delta summary
 - pass condition: 목표를 실제로 전진시켰거나, 왜 중단했는지 evidence 기반으로 설명 가능한 상태여야 한다
 - 자동 다음 행동: `pass`면 best state 요약 후 종료, `refine`이면 같은 계약으로 다음 가설 실행, `pivot`이면 접근 전략 변경, `rescope`면 계약 재작성, `escalate`면 사람 또는 별도 evaluator로 넘기고 block 이유를 남긴다, `stop`이면 남은 리스크와 다음 후보만 남기고 종료한다
@@ -113,7 +118,7 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 - 선택한 mode
 - objective와 evaluation contract
 - 현재 baseline / best-known state
-- 최근 라운드 결과와 keep/revert 판단
+- 최근 라운드의 hard gate 결과 / experiment status / control action
 - state snapshot 또는 handoff 메모
 - 다음 실험 또는 종료 사유
 - 필요 시 ledger 발췌와 핵심 evidence
