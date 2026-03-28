@@ -48,6 +48,14 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 - `references/result-ledger-template.md`
 - `references/state-snapshot-and-handoff.md`
 - `references/worked-example-skill-improvement.md`
+- `references/codex-cli-runner.md`
+- `scripts/codex_goal_research_loop.py`
+- `scripts/goal-research-loop.sh`
+- `templates/program.md`
+- `templates/contract.md`
+- `templates/state_snapshot.md`
+- `templates/ledger.tsv`
+- `schemas/round-result.schema.json`
 
 ## Quick start
 
@@ -59,6 +67,31 @@ description: Use this skill when the user explicitly wants a goal-directed resea
 6. 처음 운영하면 `worked-example-skill-improvement.md`로 contract → ledger → snapshot 연결 예시를 한번 봅니다.
 7. 한 라운드에 가설 하나만 실행하고 `result-ledger-template.md` 형식으로 기록합니다.
 8. 각 라운드는 **hard gate 결과 + experiment status + control action**으로 닫습니다.
+
+### Codex CLI runner quick start
+
+`karpathy/autoresearch`의 `program.md + results.tsv + keep/discard loop` 패턴을
+`goal-research-loop` 규칙에 맞게 옮긴 host-managed runner가 포함되어 있습니다.
+
+```bash
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh init /path/to/workspace "한 문장 objective"
+
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh run /path/to/workspace --max-rounds 3 --search --full-auto
+
+python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
+  init \
+  --workspace /path/to/workspace \
+  --objective "한 문장 objective"
+
+python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
+  run \
+  --workspace /path/to/workspace \
+  --max-rounds 3 \
+  --search \
+  --full-auto
+```
+
+세부 동작은 `references/codex-cli-runner.md`를 참고하세요.
 
 ## Workflow
 
