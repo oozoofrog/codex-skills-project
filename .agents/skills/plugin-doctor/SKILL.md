@@ -26,3 +26,11 @@ description: Codex 플러그인/스킬 저장소를 감사하고 개선합니다
 - `.agents/plugins/marketplace.json`와 `plugins/*/.codex-plugin/plugin.json` (존재하는 경우)
 - `.mcp.json`, `.app.json` 같은 보조 매니페스트
 - Codex로 옮기면서 남은 Claude 전용 흔적
+
+## Review Harness
+- mode: none
+- 공통 기준: `../../../docs/review-harness.md`
+- generator: 상위 변경사항 또는 감사 대상 repo 구조
+- evaluator: 이 스킬 자체와 audit script가 evaluator-native plugin audit 역할을 수행한다
+- artifacts/evidence: manifest 구조, audit script output, legacy residue, custom agent 정합성
+- pass condition: plugin/skill/custom agent 레이어의 구조 문제를 severity와 근거와 함께 설명할 수 있어야 한다
