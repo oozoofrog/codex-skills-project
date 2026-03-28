@@ -173,7 +173,7 @@ python3 scripts/install_global_skills.py --list
 - `codex-skill-audit`
 - `codex-skill-bootstrap`
 - `gpt-research` — 외부 GPT/deep research로 넘길 프롬프트와 컨텍스트 패키지 생성
-- `goal-research-loop` — objective 기반 반복 실험 루프 운영, contract/ledger/state snapshot 유지 (`scripts/codex_goal_research_loop.py` 포함)
+- `goal-research-loop` — objective 기반 반복 실험 루프 운영, contract/ledger/state snapshot 유지 (`scripts/goal-research-loop.sh`, `scripts/codex_goal_research_loop.py` 포함)
 - `hey-codex`
 - `plugin-doctor`
 

@@ -26,6 +26,38 @@
 차이점은 `goal-research-loop`의 핵심 규칙인
 `hard gates / experiment status / control action` 분리를 구조적으로 강제한다는 점입니다.
 
+## 스킬이 runner를 우선 선택해야 하는 때
+
+아래면 `goal-research-loop`는 **runner 사용을 우선**하는 편이 좋습니다.
+
+- 사용자가 repeatable / autonomous / overnight loop를 원할 때
+- 다음 세션에서도 같은 objective를 이어받아야 할 때
+- contract, snapshot, ledger를 파일로 유지해야 할 때
+- 실험 결과를 round directory 단위로 재검토해야 할 때
+
+아래면 runner 없이 contract 설계만 먼저 해도 됩니다.
+
+- 아직 `design` 단계라 metric과 hard gate가 비어 있을 때
+- 사용자가 실제 실행보다 전략 설계/초안만 원할 때
+- 루프를 돌리기보다 adjacent skill 경계 정리가 먼저일 때
+
+## 권장 명령 선택
+
+가장 자주 쓰는 명령은 아래 3개입니다.
+
+```bash
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh init /path/to/workspace "objective"
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh status /path/to/workspace
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh run /path/to/workspace --max-rounds 3 --search --full-auto
+```
+
+원칙:
+
+1. 새 루프면 `init`
+2. 이어받기 전 점검이면 `status`
+3. bounded execution이면 `run --max-rounds`
+4. explicit autonomous opt-in일 때만 Python runner의 `--loop-forever`
+
 ## 기본 흐름
 
 ### 1) 템플릿 초기화
@@ -96,6 +128,9 @@ python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
   --full-auto
 ```
 
+`goal-research-loop.sh`는 intentionally bounded flow에 집중합니다.
+무기한 또는 특별한 플래그가 필요하면 Python runner를 직접 호출하는 편이 더 명시적입니다.
+
 ## Git keep/revert 동작
 
 git 저장소에서 깨끗한 working tree로 시작하면 runner는 `autoresearch`처럼 동작합니다.
@@ -120,6 +155,16 @@ git 저장소에서 깨끗한 working tree로 시작하면 runner는 `autoresear
 
 호스트 스크립트는 이 structured result를 기반으로 `ledger.tsv`를 append하고,
 필요하면 keep/discard에 따라 git 상태를 관리합니다.
+
+## Skill operator checklist
+
+runner를 쓸 때는 응답에 아래를 함께 남기는 편이 좋습니다.
+
+- 왜 script-first인지
+- init / status / run 중 어떤 명령을 쓸지
+- workspace 경로
+- bounded인지 autonomous인지
+- 예상 산출물 위치 (`.goal-research-loop/`)
 
 ## 추천 사용 조건
 

@@ -143,7 +143,7 @@ def sanitize_status_lines(lines: Iterable[str], state_dir_rel: Path | None) -> l
 
 
 def ensure_clean_git_tree(workspace: Path, state_dir_rel: Path | None) -> None:
-    status = git(workspace, "status", "--porcelain", "--untracked-files=all")
+    status = git(workspace, "status", "--porcelain", "--untracked-files=all", "--", ".")
     filtered = sanitize_status_lines(status.stdout.splitlines(), state_dir_rel)
     if filtered:
         preview = "\n".join(filtered[:20])
@@ -153,14 +153,20 @@ def ensure_clean_git_tree(workspace: Path, state_dir_rel: Path | None) -> None:
         )
 
 
+def workspace_has_tracked_files(workspace: Path) -> bool:
+    tracked = git(workspace, "ls-files", "--cached", "--", ".")
+    return bool(tracked.stdout.strip())
+
+
 def workspace_changes_exist(workspace: Path, state_dir_rel: Path | None) -> bool:
-    status = git(workspace, "status", "--porcelain", "--untracked-files=all")
+    status = git(workspace, "status", "--porcelain", "--untracked-files=all", "--", ".")
     filtered = sanitize_status_lines(status.stdout.splitlines(), state_dir_rel)
     return bool(filtered)
 
 
 def restore_workspace(workspace: Path, state_dir_rel: Path | None) -> None:
-    git(workspace, "restore", "--source=HEAD", "--staged", "--worktree", ".")
+    if workspace_has_tracked_files(workspace):
+        git(workspace, "restore", "--source=HEAD", "--staged", "--worktree", ".")
     clean_cmd = ["git", "clean", "-fd"]
     if state_dir_rel is not None:
         clean_cmd.extend(["-e", state_dir_rel.as_posix().rstrip("/") + "/"])
@@ -271,6 +277,54 @@ def append_ledger_row(
         handle.write("\t".join(row) + "\n")
 
 
+def compact_for_prompt(text: str, *, max_lines: int, max_chars: int) -> str:
+    lines = text.splitlines()
+    trimmed = lines[:max_lines]
+    result = "\n".join(trimmed)
+    if len(lines) > max_lines:
+        result += "\n... (truncated for lightweight prompt)"
+    if len(result) > max_chars:
+        result = result[: max_chars - 32].rstrip() + "\n... (truncated for lightweight prompt)"
+    return result
+
+
+def build_prompt_profile_section(skill_dir: Path, profile: str) -> tuple[list[str], list[str], list[str]]:
+    standard_refs = [
+        str(skill_dir / "SKILL.md"),
+        str(skill_dir / "references" / "fit-and-mode-routing.md"),
+        str(skill_dir / "references" / "loop-contract.md"),
+        str(skill_dir / "references" / "decision-layers-and-status-mapping.md"),
+        str(skill_dir / "references" / "result-ledger-template.md"),
+        str(skill_dir / "references" / "state-snapshot-and-handoff.md"),
+        str(skill_dir / "references" / "codex-cli-runner.md"),
+    ]
+    if profile == "lightweight":
+        refs = [
+            str(skill_dir / "SKILL.md"),
+            str(skill_dir / "references" / "decision-layers-and-status-mapping.md"),
+            str(skill_dir / "references" / "codex-cli-runner.md"),
+        ]
+        rules = [
+            "이번 라운드는 lightweight prompt profile입니다.",
+            "위 3개 파일만 먼저 읽고 시작하세요. 다른 reference는 막혔을 때만 추가로 읽으세요.",
+            "불필요한 장문 탐색보다 빠른 completion과 evidence 남기기를 우선하세요.",
+        ]
+        required = [
+            "contract가 이미 채워져 있으면 reference를 더 읽지 말고 바로 가설 선택으로 진행합니다.",
+            "근거는 짧더라도 concrete command/artifact에 연결하세요.",
+        ]
+        return refs, rules, required
+
+    rules = [
+        "이번 라운드는 standard prompt profile입니다.",
+        "아래 reference를 먼저 읽고 contract와 decision layer를 맞춘 뒤 진행하세요.",
+    ]
+    required = [
+        "contract가 비어 있거나 모호하면 reference를 활용해 보강하세요.",
+    ]
+    return standard_refs, rules, required
+
+
 def build_round_prompt(
     *,
     workspace: Path,
@@ -284,12 +338,19 @@ def build_round_prompt(
     round_num: int,
     head_ref: str | None,
     extra_instructions: list[str],
+    prompt_profile: str,
 ) -> str:
     program_text = read_text(program_path).strip()
     contract_text = read_text(contract_path).strip()
     snapshot_text = read_text(snapshot_path).strip() if snapshot_path.exists() else "(state snapshot 없음)"
     ledger_excerpt = recent_ledger_excerpt(ledger_path)
     evidence_path = round_dir / "evidence.md"
+    refs, profile_rules, profile_required = build_prompt_profile_section(skill_dir, prompt_profile)
+    refs_text = "\n".join(f"- {ref}" for ref in refs)
+    profile_rules_text = "\n".join(f"- {rule}" for rule in profile_rules)
+    profile_required_text = "\n".join(
+        f"{idx}. {rule}" for idx, rule in enumerate(profile_required, start=7)
+    )
 
     extra_text = ""
     if extra_instructions:
@@ -303,6 +364,12 @@ def build_round_prompt(
         else "이미 이전 라운드가 있으므로, best-known state를 기준으로 다음 가설 하나만 실행하세요."
     )
 
+    if prompt_profile == "lightweight":
+        program_text = compact_for_prompt(program_text, max_lines=18, max_chars=1400)
+        contract_text = compact_for_prompt(contract_text, max_lines=18, max_chars=1600)
+        snapshot_text = compact_for_prompt(snapshot_text, max_lines=14, max_chars=1000)
+        ledger_excerpt = recent_ledger_excerpt(ledger_path, limit=3)
+
     return textwrap.dedent(
         f"""
         # Goal Research Loop Round {round_num}
@@ -311,13 +378,7 @@ def build_round_prompt(
         이번 호출은 `goal-research-loop` 스킬 운영 규칙을 따릅니다.
 
         ## 먼저 읽을 스킬 파일
-        - {skill_dir / "SKILL.md"}
-        - {skill_dir / "references" / "fit-and-mode-routing.md"}
-        - {skill_dir / "references" / "loop-contract.md"}
-        - {skill_dir / "references" / "decision-layers-and-status-mapping.md"}
-        - {skill_dir / "references" / "result-ledger-template.md"}
-        - {skill_dir / "references" / "state-snapshot-and-handoff.md"}
-        - {skill_dir / "references" / "codex-cli-runner.md"}
+        {refs_text}
 
         ## 이번 호출의 운영 규칙
         - 한 라운드 = 가설 1개만 실행합니다.
@@ -328,6 +389,7 @@ def build_round_prompt(
         - 근거는 `{evidence_path}`에 Markdown으로 남기고, `{snapshot_path}`를 최신 상태로 갱신하세요.
         - `{program_path}`와 `{contract_path}`를 source of truth로 다루세요.
         - {baseline_note}
+        {profile_rules_text}
 
         ## 작업 위치
         - workspace: {workspace}
@@ -361,6 +423,7 @@ def build_round_prompt(
         4. `{evidence_path}`에 이번 실험의 가설, 실행, 근거, 판정을 남깁니다.
         5. `{snapshot_path}`를 최신 best-known state, 최근 판정, 다음 후보로 갱신합니다.
         6. 마지막 응답은 JSON schema에 맞는 JSON만 반환합니다.
+        {profile_required_text}
 
         ## JSON 응답 제약
         - `round`는 {round_num}이어야 합니다.
@@ -602,6 +665,7 @@ def cmd_run(args: argparse.Namespace) -> int:
             round_num=round_num,
             head_ref=current_head(workspace) if git_root else None,
             extra_instructions=args.extra_instruction or [],
+            prompt_profile=args.prompt_profile,
         )
         write_text(prompt_path, prompt)
 
@@ -754,6 +818,12 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--timeout-seconds", type=int, default=1800, help="라운드별 codex exec 타임아웃 (기본: 1800)")
     run_parser.add_argument("--add-dir", action="append", help="codex exec 에 추가 writable directory 전달")
     run_parser.add_argument("--extra-instruction", action="append", help="매 라운드 프롬프트에 추가할 짧은 지시")
+    run_parser.add_argument(
+        "--prompt-profile",
+        choices=["standard", "lightweight"],
+        default="standard",
+        help="라운드 프롬프트 밀도 프로필 (기본: standard)",
+    )
     run_parser.add_argument("--allow-dirty", action="store_true", help="git dirty tree에서도 실행 허용")
     run_parser.add_argument("--commit-on-keep", dest="commit_on_keep", action="store_true", default=None, help="keep 결과를 자동 commit")
     run_parser.add_argument("--no-commit-on-keep", dest="commit_on_keep", action="store_false", help="keep 결과를 자동 commit 하지 않음")
