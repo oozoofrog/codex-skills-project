@@ -11,7 +11,7 @@
   <text x="212" y="240" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="110" font-weight="800" fill="white">AA</text>
   <text x="396" y="162" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="74" font-weight="800" fill="white">App Automation</text>
   <text x="396" y="216" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="30" font-weight="600" fill="#D6E4FF">Automate iOS Simulator and macOS apps</text>
-  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Inspect UI trees, interact with simulator or macOS apps, capture screenshots, and run repeatable automation flows with baepsae.</text>
+  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Inspect UI trees, interact with simulator or macOS apps, and capture screenshots or recordings as evidence for repeatable automation flows with baepsae.</text>
   <rect x="396" y="102" width="120" height="36" rx="18" fill="#67E8F9" fill-opacity="0.16"/><text x="414" y="126" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Automation</text>
   <rect x="396" y="150" width="120" height="36" rx="18" fill="#67E8F9" fill-opacity="0.16"/><text x="414" y="174" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">UI</text>
   <rect x="396" y="198" width="125" height="36" rx="18" fill="#67E8F9" fill-opacity="0.16"/><text x="414" y="222" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Screenshots</text>

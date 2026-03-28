@@ -10,8 +10,8 @@
   <rect x="72" y="72" width="280" height="280" rx="52" fill="#F97316"/>
   <text x="212" y="240" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="110" font-weight="800" fill="white">HC</text>
   <text x="396" y="162" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="74" font-weight="800" fill="white">Hey Codex</text>
-  <text x="396" y="216" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="30" font-weight="600" fill="#D6E4FF">Run a separate Codex CLI task on demand</text>
-  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs when the user explicitly asks.</text>
+  <text x="396" y="216" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="30" font-weight="600" fill="#D6E4FF">Run a separate Codex CLI task only on explicit request</text>
+  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs only when the user explicitly asks.</text>
   <rect x="396" y="102" width="120" height="36" rx="18" fill="#FDBA74" fill-opacity="0.16"/><text x="414" y="126" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Delegation</text>
   <rect x="396" y="150" width="120" height="36" rx="18" fill="#FDBA74" fill-opacity="0.16"/><text x="414" y="174" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">CLI</text>
   <rect x="396" y="198" width="120" height="36" rx="18" fill="#FDBA74" fill-opacity="0.16"/><text x="414" y="222" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Review</text>

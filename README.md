@@ -13,6 +13,7 @@
 - 스킬의 **authoring source**는 repo 안의 `.agents/skills/`
 - 실제 사용은 `~/.codex/skills/`로 **전역 설치**
 - repo를 직접 여는 방식은 **개발/검증용 보조 흐름**
+- **검토는 가능하면 generator/evaluator 분리와 evidence 기반 harness로 수행**
 
 즉, 이 저장소는 “repo-local workspace 자체”보다 **전역 스킬 배포 원본**에 더 가깝게 운영합니다.
 
@@ -238,6 +239,23 @@ codex-skills-project/
 Codex plugin 패키징과 로컬 marketplace 테스트를 위한 **2차 실험 레이어**입니다.  
 전역 스킬 배포가 1차 목적이고, plugin 패키징은 보조 목적입니다.
 
+### Review Harness 공통 규약
+
+이 저장소는 **literal GAN training**이 아니라 **GAN-inspired generator/evaluator harness**를 repo-wide convention으로 사용합니다.
+
+- 공통 원칙: `docs/review-harness.md`
+- 스킬별 매핑: `docs/review-harness-skill-matrix.md`
+- 평가 루프 표준안: `docs/evaluation-loop-standard.md`
+- 평가축/증거/자동 다음 행동 매트릭스: `docs/evaluation-loop-skill-matrix.md`
+- `agents/openai.yaml` 규약: `docs/openai-yaml-conventions.md`
+
+핵심은 다음과 같습니다.
+
+- `SKILL.md`는 짧게 유지
+- 고위험 쓰기 작업은 planner / generator / evaluator를 분리
+- 검토는 가능하면 build/test/screenshot/audit script 같은 **외부 evidence**에 앵커링
+- 감사/검증 스킬은 `mode: none`의 evaluator-native skill로 취급
+
 ## 유지보수 체크리스트
 
 스킬을 바꿨다면 최소한 아래는 확인하는 것을 권장합니다.
@@ -254,6 +272,33 @@ plugin 패키징까지 함께 건드렸다면:
 python3 scripts/sync_packaged_plugins.py
 python3 scripts/run_local_plugin_smoke_checks.py
 ```
+
+## 공식 문서
+### 테스트 가이드
+- `docs/local-plugin-testing.md`
+- `python3 scripts/update_browser_capture_assets.py <plugin-name> /path/to/browser-capture.png`
+
+### 로컬 설치 테스트 메모
+
+OpenAI Codex plugin 문서 기준으로 repo marketplace는 `$REPO_ROOT/.agents/plugins/marketplace.json`에 두고, 각 entry의 `source.path`는 marketplace root 기준 상대 경로 `./plugins/<plugin-name>`를 사용합니다. marketplace 또는 plugin 패키지를 갱신한 뒤에는 Codex를 재시작해서 카탈로그를 다시 읽게 하면 됩니다.
+
+## 사용 예시
+
+- “이 저장소 instruction 구조를 다시 짜줘” → `agent-context-guide`
+- “AGENTS.md 체계를 자동으로 깔아줘” → `agent-context-init`
+- “SwiftUI 빌드 에러를 잡아줘” → `apple-craft`
+- “처음부터 설정 화면을 만들어줘” → `apple-harness`
+- “PR #42를 Apple 관점에서 리뷰해줘” → `apple-review`
+- “이 프로젝트를 외부 GPT 리서치용 프롬프트로 정리해줘” → `gpt-research`
+- “Codex CLI를 한 번 더 돌려서 세컨드 오피니언 받아와” → `hey-codex`
+- “이 repo를 Codex plugin 관점에서 검사해줘” → `plugin-doctor`
+- “새 스킬을 만들고 audit까지 끝내줘” → `codex-skill-bootstrap` → `codex-skill-audit`
+- “AGENTS.md 구조를 고치고 검증까지 해줘” → `agent-context-init` → `agent-context-verify` / `agent-context-audit`
+
+
+### 라이브 캡처 갱신
+
+- `python3 scripts/update_live_capture_assets.py /path/to/codex-live-capture.png`
 
 ## 공식 문서
 
