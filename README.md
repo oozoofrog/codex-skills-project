@@ -172,8 +172,8 @@ python3 scripts/install_global_skills.py --list
 
 - `codex-skill-audit`
 - `codex-skill-bootstrap`
-- `gpt-research`
-- `goal-research-loop`
+- `gpt-research` — 외부 GPT/deep research로 넘길 프롬프트와 컨텍스트 패키지 생성
+- `goal-research-loop` — objective 기반 반복 실험 루프 운영, contract/ledger/state snapshot 유지
 - `hey-codex`
 - `plugin-doctor`
 
@@ -300,6 +300,7 @@ OpenAI Codex plugin 문서 기준으로 repo marketplace는 `$REPO_ROOT/.agents/
 - “처음부터 설정 화면을 만들어줘” → `apple-harness`
 - “PR #42를 Apple 관점에서 리뷰해줘” → `apple-review`
 - “이 프로젝트를 외부 GPT 리서치용 프롬프트로 정리해줘” → `gpt-research`
+- “목표를 두고 가설을 반복 검증하면서 best state를 찾아줘” → `goal-research-loop`
 - “Codex CLI를 한 번 더 돌려서 세컨드 오피니언 받아와” → `hey-codex`
 - “이 repo를 Codex plugin 관점에서 검사해줘” → `plugin-doctor`
 - “새 스킬을 만들고 audit까지 끝내줘” → `codex-skill-bootstrap` → `codex-skill-audit`

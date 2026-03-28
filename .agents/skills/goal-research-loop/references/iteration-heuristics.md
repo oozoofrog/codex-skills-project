@@ -15,9 +15,21 @@
 4. hard gate 검사
 5. metric 비교
 6. ledger 기록 + state snapshot 갱신
-7. `keep / discard / crash / pivot / rescope / escalate / stop` 중 하나 결정
+7. experiment status(`keep / discard / crash`) 결정
+8. control action(`pass / refine / pivot / rescope / escalate / stop`) 결정
 
-## Keep / discard / pivot rules
+## Decision layers
+
+각 라운드는 아래 3개 층위로 닫습니다.
+
+1. **hard gate result** — `pass / fail`
+2. **experiment status** — `keep / discard / crash`
+3. **control action** — `pass / refine / pivot / rescope / escalate / stop`
+
+예를 들어 `hard gates: pass`, `experiment status: keep`, `control action: refine`는
+“이번 결과는 채택하지만 아직 루프를 더 돈다”는 뜻입니다.
+
+## Experiment status rules
 
 ### Keep
 
@@ -30,6 +42,18 @@
 - hard gate 실패
 - metric 악화
 - 개선 폭이 미미한데 복잡도만 증가
+
+### Crash
+
+- 실행 자체가 무너짐
+- 아이디어 이전에 조작/실행이 성립하지 않음
+
+## Control action rules
+
+### Refine
+
+- 같은 계약 안에서 다음 가설을 계속 시도할 가치가 있음
+- 이번 라운드의 keep/discard 이유가 다음 선택을 바로 안내함
 
 ### Pivot
 
@@ -48,6 +72,17 @@
 - 사람 판단이나 외부 승인 없이는 진행이 위험함
 - evidence가 충돌해 keep/revert를 자신 있게 결정할 수 없음
 - 새 mutable surface를 열어야 해서 계약을 그대로 유지할 수 없음
+
+### Pass
+
+- 목표 달성 또는 충분한 전진이 확인됨
+- 현재 best-known state를 보고 종료해도 됨
+
+### Stop
+
+- 예산 소진
+- 반복 정체
+- 리스크 상승으로 추가 진행 이득이 낮음
 
 ## Crash handling
 
