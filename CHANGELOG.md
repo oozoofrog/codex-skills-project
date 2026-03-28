@@ -2,6 +2,30 @@
 
 이 문서는 이 저장소의 사용자 관점 변화와 릴리스 포인트를 기록합니다.
 
+## v0.2.1 — 2026-03-28
+
+### 핵심 변경
+
+- `v0.2.0` 이후 추가된 발표/로드맵 문서를 정리했습니다.
+- README의 릴리스 링크를 최신 릴리스 기준으로 보강했습니다.
+- `v0.3.0` 후보 작업을 별도 문서로 정리했습니다.
+- `v0.2.0` 발표문 초안을 저장소 안에 남겼습니다.
+
+### 추가된 문서
+
+- `docs/release-announcement-v0.2.0.md`
+- `docs/roadmap-v0.3.0.md`
+
+### 링크 보강
+
+- `README.md`에 latest release, changelog, release notes, roadmap 링크를 추가했습니다.
+
+### 검증에 사용한 명령
+
+```bash
+python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py .
+```
+
 ## v0.2.0 — 2026-03-28
 
 관련 문서:
