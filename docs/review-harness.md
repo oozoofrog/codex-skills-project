@@ -6,7 +6,7 @@
 
 - OpenAI Codex Skills 문서는 skill을 *instructions, resources, optional scripts*의 묶음으로 설명하며, progressive disclosure를 통해 필요한 순간에만 전체 지침을 로드한다고 설명합니다.
 - OpenAI AGENTS.md 문서는 규칙을 작업과 가까운 곳에 두고, 긴 배경 설명은 `docs/` 같은 외부 문서로 분리하라고 안내합니다.
-- Anthropic의 *Harness design for long-running application development* (2026-03-24)는 **generator와 evaluator를 분리하는 편이 self-evaluation bias를 줄이는 데 더 실용적**이라고 보여줍니다.
+- Anthropic의 *Effective harnesses for long-running agents* (2025-11-26)는 **generator와 evaluator를 분리하는 편이 self-evaluation bias를 줄이는 데 더 실용적**이라는 운영 방향을 보여줍니다.
 
 따라서 이 저장소에서는:
 
@@ -132,4 +132,4 @@ review harness를 선언했다면 선택적 메타데이터도 가능한 한 같
 
 - OpenAI Codex Skills: https://developers.openai.com/codex/skills
 - OpenAI AGENTS.md guide: https://developers.openai.com/codex/guides/agents-md
-- Anthropic, *Harness design for long-running application development* (2026-03-24): https://www.anthropic.com/engineering/harness-design-long-running-apps
+- Anthropic, *Effective harnesses for long-running agents* (2025-11-26): https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents

@@ -23,11 +23,15 @@
    - 동점일 때 보는 2차 기준
 8. **Baseline**
    - 현재 기준 상태
-9. **Budget**
+9. **Evidence sources**
+   - 어떤 로그, 비교표, 링크, 테스트로 판정할지
+10. **Budget**
    - 최대 반복 수, 시간, 비용, 토큰, 컴퓨트
-10. **Stop condition**
+11. **Stop condition**
    - 종료 조건과 사람에게 넘길 조건
-11. **Ledger path**
+12. **State snapshot / handoff**
+   - 반복 세션에서 유지할 현재 best state와 다음 후보
+13. **Ledger path**
    - 실험 기록 위치 또는 표 형식
 
 ## Markdown template
@@ -42,8 +46,10 @@
 - primary metric: ...
 - tie-breakers: ...
 - baseline: ...
+- evidence sources: ...
 - budget: ...
 - stop condition: ...
+- state snapshot: ...
 - ledger: ...
 ```
 
@@ -53,3 +59,4 @@
 - primary metric은 가능한 한 **하나**로 유지합니다.
 - subjective quality만 있는 작업은 rubric을 먼저 수치화하거나 등급화합니다.
 - autonomous-loop에서는 contract가 비어 있거나 모호하면 시작하지 않습니다.
+- 반복 세션에서는 `state snapshot`이 없으면 같은 실험을 되풀이하거나 이미 버린 가설로 되돌아가기 쉽습니다.

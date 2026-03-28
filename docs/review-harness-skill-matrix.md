@@ -14,6 +14,7 @@
 | `apple-review` | `none` | 상위 구현 또는 PR diff | 이 스킬 자체가 evaluator-native | Swift 파일, diagnostics, build 결과, severity report | Apple lifecycle / concurrency / accessibility 중심 |
 | `codex-skill-audit` | `none` | 상위 스킬이 만든 skill repo 변경 | 이 스킬 자체가 evaluator-native + audit script | 구조 감사 보고서, script output | bootstrap 이후 기본 후속 스킬 |
 | `codex-skill-bootstrap` | `required` | skill 구조 설계 및 생성 | `codex-skill-audit` | 생성 파일 목록, frontmatter, references 분리, metadata | 새 스킬/구조 변경 시 audit까지 포함 |
+| `goal-research-loop` | `required` | objective/contract 정리 후 가설을 한 번에 하나씩 실행 | contract 대비 hard gate·metric·evidence·state continuity를 독립 점검하는 evaluator | loop contract, baseline, experiment ledger, state snapshot, 실행 로그/조사 근거 | 장기·반복 연구용이므로 세션 간 handoff 품질까지 평가해야 함 |
 | `gpt-research` | `optional` | research prompt 초안 생성 | coverage/chunking checklist 기반 read-only 검토 | 포함 파일 목록, chunking 결과, prompt 본문 | 민감정보·누락·과잉맥락을 점검 |
 | `hey-codex` | `optional` | 별도 Codex 인스턴스 실행 | 부모 세션의 diff / output review | subprocess output, snapshot diff, mode detection | `write` 모드에서는 사실상 required에 가깝게 운용 |
 | `macos-release` | `required` | 버전 범프, 빌드, 패키징, 배포 준비 | dry-run, local install, checksum, release checklist | build logs, package hashes, 설치 확인, release notes | 로컬 검증 전 외부 공개 금지 |

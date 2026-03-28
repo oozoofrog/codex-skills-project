@@ -1,6 +1,6 @@
 # Anthropic 기반 평가 루프 표준안
 
-이 문서는 Anthropic의 *Harness design for long-running application development* (Published Mar 24, 2026)를 읽고, 이 저장소에서 **평가와 이후 동작 자동 진행**을 어떻게 설계할지 정리한 표준안입니다.
+이 문서는 Anthropic의 *Effective harnesses for long-running agents* (Published Nov 26, 2025)를 읽고, 이 저장소에서 **평가와 이후 동작 자동 진행**을 어떻게 설계할지 정리한 표준안입니다.
 
 핵심 전제:
 
@@ -9,7 +9,7 @@
 - 그리고 **평가 결과가 다음 동작을 결정하는 자동 제어 루프**입니다.
 
 참고 원문:
-- https://www.anthropic.com/engineering/harness-design-long-running-apps
+- https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
 
 ## 0. 먼저 바로잡을 오해
 

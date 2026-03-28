@@ -14,8 +14,8 @@
 3. 필요한 최소 변경/조사 수행
 4. hard gate 검사
 5. metric 비교
-6. ledger 기록
-7. `keep / discard / crash / pivot / rescope` 중 하나 결정
+6. ledger 기록 + state snapshot 갱신
+7. `keep / discard / crash / pivot / rescope / escalate / stop` 중 하나 결정
 
 ## Keep / discard / pivot rules
 
@@ -43,6 +43,12 @@
 - metric이 애매함
 - mutable surface가 과도하게 큼
 
+### Escalate
+
+- 사람 판단이나 외부 승인 없이는 진행이 위험함
+- evidence가 충돌해 keep/revert를 자신 있게 결정할 수 없음
+- 새 mutable surface를 열어야 해서 계약을 그대로 유지할 수 없음
+
 ## Crash handling
 
 - typo, import, 경로 문제처럼 사소한 실패는 빠르게 1회 수정 후 재시도합니다
@@ -60,6 +66,17 @@
 
 을 우선합니다.
 
+## State continuity
+
+루프가 여러 세션에 걸치면 아래를 매 라운드 끝에 갱신합니다.
+
+- 현재 best-known state
+- 최근 discard/crash 이유
+- 지금 열려 있는 가설 1개
+- 다음 후보 1~3개
+
+이 정보가 없으면 루프는 쉽게 “조금씩 다른 중복 실험”으로 무너집니다.
+
 ## When to ask the user
 
 아래에서만 다시 묻습니다.
@@ -68,3 +85,4 @@
 - 새 write surface를 열어야 할 때
 - 고비용/고위험 리소스 사용이 필요할 때
 - 연구 목표 자체를 바꿔야 할 때
+- evidence 충돌로 사람이 keep/revert를 정해야 할 때
