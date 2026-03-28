@@ -1,6 +1,6 @@
 {
   "name": "gpt-research",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Extract structured prompts for external GPT and deep research workflows.",
   "author": {
     "name": "codex-skills-project"
@@ -15,7 +15,7 @@
   "interface": {
     "displayName": "GPT Research",
     "shortDescription": "Prepare structured prompts for external research",
-    "longDescription": "Collect the right repository context and format it into reusable prompts for external GPT or deep research workflows.",
+    "longDescription": "Collect the right repository context, check coverage and chunking, and format it into reusable prompts for external GPT or deep research workflows.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
@@ -26,7 +26,7 @@
     "defaultPrompt": [
       "Generate a module-focused research prompt for this directory.",
       "Prepare an architecture research prompt for the whole repository.",
-      "Turn this error and its related files into a deep-research handoff."
+      "Turn this error and its related files into a deep-research handoff with clean context boundaries."
     ],
     "brandColor": "#14B8A6",
     "composerIcon": "./assets/icon.png",

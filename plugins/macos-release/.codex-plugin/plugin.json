@@ -1,6 +1,6 @@
 {
   "name": "macos-release",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automate macOS app and CLI release preparation, packaging, and publishing.",
   "author": {
     "name": "codex-skills-project"
@@ -14,8 +14,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "macOS Release",
-    "shortDescription": "Prepare and publish macOS releases",
-    "longDescription": "Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software.",
+    "shortDescription": "Prepare and publish macOS releases with verification gates",
+    "longDescription": "Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software with explicit verification gates.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
@@ -25,8 +25,8 @@
     ],
     "defaultPrompt": [
       "Prepare a dry-run release plan for this macOS app.",
-      "Review this repository for missing release automation steps.",
-      "Set up a release script for build, DMG, GitHub Release, and Homebrew."
+      "Review this repository for missing release automation and verification steps.",
+      "Set up a release script for build, DMG, local validation, GitHub Release, and Homebrew."
     ],
     "brandColor": "#EF4444",
     "composerIcon": "./assets/icon.png",

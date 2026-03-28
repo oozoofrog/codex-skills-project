@@ -11,7 +11,7 @@
   <text x="212" y="240" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="110" font-weight="800" fill="white">AP</text>
   <text x="396" y="162" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="74" font-weight="800" fill="white">Apple Craft</text>
   <text x="396" y="216" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="30" font-weight="600" fill="#D6E4FF">Swift, SwiftUI, UIKit, and Xcode support</text>
-  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs for current Apple APIs.</text>
+  <text x="396" y="276" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="500" fill="#CBD5E1">Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs and evidence-driven verification for current Apple APIs.</text>
   <rect x="396" y="102" width="120" height="36" rx="18" fill="#C4B5FD" fill-opacity="0.16"/><text x="414" y="126" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Swift</text>
   <rect x="396" y="150" width="120" height="36" rx="18" fill="#C4B5FD" fill-opacity="0.16"/><text x="414" y="174" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Xcode</text>
   <rect x="396" y="198" width="120" height="36" rx="18" fill="#C4B5FD" fill-opacity="0.16"/><text x="414" y="222" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="600" fill="white">Review</text>

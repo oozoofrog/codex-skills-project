@@ -1,6 +1,6 @@
 {
   "name": "plugin-doctor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Audit Codex plugin, custom-agent, and skill repositories for structural issues.",
   "author": {
     "name": "codex-skills-project"
@@ -14,8 +14,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Plugin Doctor",
-    "shortDescription": "Audit Codex plugin and skill repositories",
-    "longDescription": "Validate repo-local skills, optional packaged plugins, marketplace metadata, and custom agents while flagging stale Claude-specific leftovers.",
+    "shortDescription": "Audit Codex plugin and skill repositories with evidence",
+    "longDescription": "Validate repo-local skills, optional packaged plugins, marketplace metadata, custom agents, and evidence-backed review harness conventions while flagging stale Claude-specific leftovers.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
     "capabilities": [
@@ -26,7 +26,7 @@
     "defaultPrompt": [
       "Audit this repository for Codex plugin and skill structure issues.",
       "Check whether packaged plugins and marketplace metadata are consistent.",
-      "Find stale Claude-specific artifacts that should be removed or documented."
+      "Find stale Claude-specific artifacts or packaging drift that should be removed or documented."
     ],
     "brandColor": "#6366F1",
     "composerIcon": "./assets/icon.png",

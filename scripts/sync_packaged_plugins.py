@@ -17,7 +17,7 @@ BROWSER_CAPTURE_DIR = ROOT / 'assets' / 'browser-captures'
 PLUGIN_SPECS = [
     {
         'name': 'agent-context',
-        'version': '1.4.0',
+        'version': '1.4.1',
         'description': 'Layered AGENTS.md instruction architecture for Codex repositories.',
         'skills': ['agent-context-guide', 'agent-context-init', 'agent-context-verify', 'agent-context-audit'],
         'keywords': ['agents-md', 'context', 'documentation', 'architecture'],
@@ -28,21 +28,21 @@ PLUGIN_SPECS = [
         'interface': {
             'displayName': 'Agent Context',
             'shortDescription': 'Layered AGENTS.md design and verification',
-            'longDescription': 'Scaffold, validate, and audit layered Codex instruction architectures with root and nested AGENTS.md files plus lightweight supporting docs.',
+            'longDescription': 'Scaffold, validate, and audit layered Codex instruction architectures with root and nested AGENTS.md files, lightweight supporting docs, and explicit verify/audit follow-through.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Scaffold', 'Read', 'Write', 'Validate'],
             'defaultPrompt': [
                 'Analyze this repository and propose a layered AGENTS.md structure.',
-                'Scaffold AGENTS.md and nested instruction files for this repo.',
-                'Verify whether the current AGENTS.md files still match the codebase.',
+                'Scaffold AGENTS.md and nested instruction files for this repo, then prepare them for verify/audit checks.',
+                'Verify whether the current AGENTS.md files still match the codebase and where guidance has drifted.',
             ],
         },
         'readme': 'Codex instruction architecture tools packaged for local marketplace testing.',
     },
     {
         'name': 'app-automation',
-        'version': '1.0.0',
+        'version': '1.0.1',
         'description': 'Automate iOS Simulator and macOS apps with baepsae MCP tooling.',
         'skills': ['app-automation'],
         'keywords': ['automation', 'simulator', 'macos', 'baepsae'],
@@ -61,21 +61,21 @@ PLUGIN_SPECS = [
         'interface': {
             'displayName': 'App Automation',
             'shortDescription': 'Automate iOS Simulator and macOS apps',
-            'longDescription': 'Inspect UI trees, interact with simulator or macOS apps, capture screenshots, and run repeatable automation flows with baepsae.',
+            'longDescription': 'Inspect UI trees, interact with simulator or macOS apps, and capture screenshots or recordings as evidence for repeatable automation flows with baepsae.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Automation', 'UI', 'Screenshots', 'MCP'],
             'defaultPrompt': [
                 'Analyze the current simulator UI tree and tell me what is visible.',
-                'Launch the app in the booted simulator and capture a screenshot.',
-                'Automate a login flow and report where it fails.',
+                'Launch the app in the booted simulator and capture a screenshot as evidence.',
+                'Automate a login flow and report where it fails with UI evidence.',
             ],
         },
         'readme': 'Local plugin package for simulator and macOS automation with baepsae.',
     },
     {
         'name': 'apple-craft',
-        'version': '1.9.2',
+        'version': '1.9.3',
         'description': 'Apple platform development with Xcode tools, bundled references, and review workflows.',
         'skills': ['apple-craft', 'apple-harness', 'apple-review'],
         'keywords': ['swift', 'swiftui', 'uikit', 'xcode', 'apple'],
@@ -86,21 +86,21 @@ PLUGIN_SPECS = [
         'interface': {
             'displayName': 'Apple Craft',
             'shortDescription': 'Swift, SwiftUI, UIKit, and Xcode support',
-            'longDescription': 'Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs for current Apple APIs.',
+            'longDescription': 'Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs and evidence-driven verification for current Apple APIs.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Swift', 'Xcode', 'Review', 'Planning'],
             'defaultPrompt': [
                 'Diagnose this SwiftUI build error and suggest the minimal fix.',
-                'Review this branch for Apple-platform-specific correctness risks.',
-                'Plan and implement a new Apple feature with a spec and evaluation loop.',
+                'Review this branch for Apple-platform-specific correctness risks with build or diagnostics evidence.',
+                'Plan and implement a new Apple feature with a spec and skeptical evaluation loop.',
             ],
         },
         'readme': 'Local plugin package for Apple platform development and review workflows.',
     },
     {
         'name': 'gpt-research',
-        'version': '1.0.1',
+        'version': '1.0.2',
         'description': 'Extract structured prompts for external GPT and deep research workflows.',
         'skills': ['gpt-research'],
         'keywords': ['research', 'prompt', 'context', 'analysis'],
@@ -111,21 +111,21 @@ PLUGIN_SPECS = [
         'interface': {
             'displayName': 'GPT Research',
             'shortDescription': 'Prepare structured prompts for external research',
-            'longDescription': 'Collect the right repository context and format it into reusable prompts for external GPT or deep research workflows.',
+            'longDescription': 'Collect the right repository context, check coverage and chunking, and format it into reusable prompts for external GPT or deep research workflows.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Research', 'Prompting', 'Context'],
             'defaultPrompt': [
                 'Generate a module-focused research prompt for this directory.',
                 'Prepare an architecture research prompt for the whole repository.',
-                'Turn this error and its related files into a deep-research handoff.',
+                'Turn this error and its related files into a deep-research handoff with clean context boundaries.',
             ],
         },
         'readme': 'Local plugin package for external GPT or deep research prompt generation.',
     },
     {
         'name': 'hey-codex',
-        'version': '1.1.0',
+        'version': '1.1.1',
         'description': 'Delegate selected tasks to a separate Codex CLI invocation when explicitly requested.',
         'skills': ['hey-codex'],
         'keywords': ['codex', 'delegation', 'cli', 'review'],
@@ -135,22 +135,22 @@ PLUGIN_SPECS = [
         'highlights': ['Separate Codex CLI runs', 'Read / review / suggest / write routing', 'Diff-aware result handoff'],
         'interface': {
             'displayName': 'Hey Codex',
-            'shortDescription': 'Run a separate Codex CLI task on demand',
-            'longDescription': 'Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs when the user explicitly asks.',
+            'shortDescription': 'Run a separate Codex CLI task only on explicit request',
+            'longDescription': 'Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs only when the user explicitly asks.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Delegation', 'CLI', 'Review'],
             'defaultPrompt': [
                 'Ask a separate Codex CLI run for a second opinion on this refactor.',
                 'Run a read-only Codex review on the current branch.',
-                'Delegate this task to another Codex process and summarize the result.',
+                'Delegate this task to another Codex process only because I am explicitly asking for it, then summarize the result.',
             ],
         },
         'readme': 'Local plugin package for explicit second-opinion Codex CLI delegation.',
     },
     {
         'name': 'macos-release',
-        'version': '1.0.0',
+        'version': '1.0.1',
         'description': 'Automate macOS app and CLI release preparation, packaging, and publishing.',
         'skills': ['macos-release'],
         'keywords': ['release', 'macos', 'packaging', 'homebrew'],
@@ -160,22 +160,22 @@ PLUGIN_SPECS = [
         'highlights': ['Version bump to publish flow', 'Packaging + local install validation', 'GitHub Release and Homebrew support'],
         'interface': {
             'displayName': 'macOS Release',
-            'shortDescription': 'Prepare and publish macOS releases',
-            'longDescription': 'Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software.',
+            'shortDescription': 'Prepare and publish macOS releases with verification gates',
+            'longDescription': 'Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software with explicit verification gates.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Release', 'Build', 'Packaging'],
             'defaultPrompt': [
                 'Prepare a dry-run release plan for this macOS app.',
-                'Review this repository for missing release automation steps.',
-                'Set up a release script for build, DMG, GitHub Release, and Homebrew.',
+                'Review this repository for missing release automation and verification steps.',
+                'Set up a release script for build, DMG, local validation, GitHub Release, and Homebrew.',
             ],
         },
         'readme': 'Local plugin package for macOS release automation workflows.',
     },
     {
         'name': 'plugin-doctor',
-        'version': '1.0.1',
+        'version': '1.0.2',
         'description': 'Audit Codex plugin, custom-agent, and skill repositories for structural issues.',
         'skills': ['plugin-doctor'],
         'keywords': ['plugins', 'audit', 'metadata', 'validation'],
@@ -185,15 +185,15 @@ PLUGIN_SPECS = [
         'highlights': ['Marketplace ↔ package cross-checks', 'Manifest, asset, and path validation', 'Claude artifact drift detection'],
         'interface': {
             'displayName': 'Plugin Doctor',
-            'shortDescription': 'Audit Codex plugin and skill repositories',
-            'longDescription': 'Validate repo-local skills, optional packaged plugins, marketplace metadata, and custom agents while flagging stale Claude-specific leftovers.',
+            'shortDescription': 'Audit Codex plugin and skill repositories with evidence',
+            'longDescription': 'Validate repo-local skills, optional packaged plugins, marketplace metadata, custom agents, and evidence-backed review harness conventions while flagging stale Claude-specific leftovers.',
             'developerName': 'codex-skills-project',
             'category': 'Productivity',
             'capabilities': ['Audit', 'Validation', 'Metadata'],
             'defaultPrompt': [
                 'Audit this repository for Codex plugin and skill structure issues.',
                 'Check whether packaged plugins and marketplace metadata are consistent.',
-                'Find stale Claude-specific artifacts that should be removed or documented.',
+                'Find stale Claude-specific artifacts or packaging drift that should be removed or documented.',
             ],
         },
         'readme': 'Local plugin package for Codex plugin and skill repository audits.',
@@ -458,7 +458,7 @@ def write_readme(plugin_root: Path, spec: dict) -> None:
     if spec.get('mcp_servers'):
         readme += '\n## Bundled MCP\n\n- `./.mcp.json`\n'
 
-    readme += '\n## Notes\n\n- This directory is generated from repo-local skills in `.agents/skills/`.\n- Regenerate packaged plugins with `python3 scripts/sync_packaged_plugins.py`.\n- Validate with `python3 .agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py .`.\n- Follow `docs/local-plugin-testing.md` for local loading checks.\n- Run `python3 scripts/run_local_plugin_smoke_checks.py` for static smoke checks.\n- `assets/screenshot.png`는 representative preview입니다.\n- `assets/browser-capture.png`가 있으면 외부 브라우저에서 렌더링한 실제 detail/gallery 캡처를 함께 제공합니다.\n- `assets/live-capture.png`가 있으면 현재 repo의 actual Codex UI capture를 함께 제공합니다.\n'
+    readme += '\n## Notes\n\n- This directory is generated from repo-local skills in `.agents/skills/`.\n- Packaged skills may include `Review Harness` sections that describe generator/evaluator roles and evidence expectations.\n- Regenerate packaged plugins with `python3 scripts/sync_packaged_plugins.py`.\n- Validate with `python3 .agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py .`.\n- Follow `docs/local-plugin-testing.md` for local loading checks.\n- Run `python3 scripts/run_local_plugin_smoke_checks.py` for static smoke checks.\n- `assets/screenshot.png`는 representative preview입니다.\n- `assets/browser-capture.png`가 있으면 외부 브라우저에서 렌더링한 실제 detail/gallery 캡처를 함께 제공합니다.\n- `assets/live-capture.png`가 있으면 현재 repo의 actual Codex UI capture를 함께 제공합니다.\n'
     (plugin_root / 'README.md').write_text(readme, encoding='utf-8')
 
 

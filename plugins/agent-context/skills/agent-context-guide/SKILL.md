@@ -28,6 +28,14 @@ description: Codex용 계층형 컨텍스트 아키텍처를 설계하고 설명
    - `agent-context-verify`
    - `agent-context-audit`
 
+## Review Harness
+- mode: optional
+- 공통 기준: `../../../docs/review-harness.md`
+- generator: AGENTS 계층 구조와 책임 분리 제안
+- evaluator: `agent-context-verify`, `agent-context-audit`
+- artifacts/evidence: 권장 파일 배치, 책임 분리표, docs 분리 계획
+- pass condition: 제안안이 링크·명령·중복 규칙 측면에서 verify/audit에 견뎌야 한다
+
 ## Output expectation
 - 권장 파일 배치
 - 루트/하위 instruction 책임 분리

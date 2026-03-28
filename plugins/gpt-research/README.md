@@ -17,6 +17,7 @@ Local plugin package for external GPT or deep research prompt generation.
 ## Notes
 
 - This directory is generated from repo-local skills in `.agents/skills/`.
+- Packaged skills may include `Review Harness` sections that describe generator/evaluator roles and evidence expectations.
 - Regenerate packaged plugins with `python3 scripts/sync_packaged_plugins.py`.
 - Validate with `python3 .agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py .`.
 - Follow `docs/local-plugin-testing.md` for local loading checks.

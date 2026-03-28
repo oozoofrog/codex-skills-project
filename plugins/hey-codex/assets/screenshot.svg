@@ -11,7 +11,7 @@
   <rect x="108" y="108" width="120" height="120" rx="28" fill="#F97316"/>
   <text x="168" y="183" text-anchor="middle" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="58" font-weight="800" fill="white">HC</text>
   <text x="108" y="286" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="42" font-weight="800" fill="white">Hey Codex</text>
-  <text x="108" y="328" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#CBD5E1">Run a separate Codex CLI task on demand</text>
+  <text x="108" y="328" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#CBD5E1">Run a separate Codex CLI task only on explicit request</text>
   <rect x="108" y="372" width="348" height="2" fill="#334155"/>
   <text x="108" y="430" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="20" font-weight="700" fill="#E2E8F0">What this package includes</text>
   <text x="108" y="474" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="18" font-weight="600" fill="#CBD5E1">• Packaged skills synced from .agents/skills</text>
@@ -43,7 +43,7 @@
   <rect x="536" y="382" width="948" height="126" rx="22" fill="white" fill-opacity="0.96"/>
   <rect x="554" y="400" width="92" height="28" rx="14" fill="#FDBA74" fill-opacity="0.18"/>
   <text x="572" y="419" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A">Prompt</text>
-  <text x="554" y="456" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#0F172A">Delegate this task to another Codex process and summarize the result.</text>
+  <text x="554" y="456" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="22" font-weight="600" fill="#0F172A">Delegate this task to another Codex process only because I am explicitly asking for it, then summarize the result.</text>
   <text x="554" y="488" font-family="Inter, SF Pro Display, Arial, sans-serif" font-size="15" font-weight="500" fill="#475569">Representative workflow preview</text>
 
   <rect x="536" y="548" width="948" height="316" rx="28" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>

@@ -7,7 +7,7 @@
     {
       "name": "agent-context",
       "description": "Layered AGENTS.md instruction architecture for Codex repositories.",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "author": {
         "name": "codex-skills-project"
       },
@@ -30,7 +30,7 @@
     {
       "name": "app-automation",
       "description": "Automate iOS Simulator and macOS apps with baepsae MCP tooling.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "codex-skills-project"
       },
@@ -53,7 +53,7 @@
     {
       "name": "apple-craft",
       "description": "Apple platform development with Xcode tools, bundled references, and review workflows.",
-      "version": "1.9.2",
+      "version": "1.9.3",
       "author": {
         "name": "codex-skills-project"
       },
@@ -77,7 +77,7 @@
     {
       "name": "gpt-research",
       "description": "Extract structured prompts for external GPT and deep research workflows.",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "codex-skills-project"
       },
@@ -100,7 +100,7 @@
     {
       "name": "hey-codex",
       "description": "Delegate selected tasks to a separate Codex CLI invocation when explicitly requested.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": {
         "name": "codex-skills-project"
       },
@@ -123,7 +123,7 @@
     {
       "name": "macos-release",
       "description": "Automate macOS app and CLI release preparation, packaging, and publishing.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "codex-skills-project"
       },
@@ -146,7 +146,7 @@
     {
       "name": "plugin-doctor",
       "description": "Audit Codex plugin, custom-agent, and skill repositories for structural issues.",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "codex-skills-project"
       },
