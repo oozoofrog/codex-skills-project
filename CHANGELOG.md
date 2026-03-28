@@ -4,6 +4,12 @@
 
 ## v0.2.0 — 2026-03-28
 
+관련 문서:
+
+- release notes: `docs/release-notes-v0.2.0.md`
+- announcement draft: `docs/release-announcement-v0.2.0.md`
+- release prep: `docs/release-prep-v0.2.0.md`
+
 ### 핵심 변경
 
 - 전역 Codex 스킬 설치 흐름을 더 명확히 정리했습니다.

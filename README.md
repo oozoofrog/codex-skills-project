@@ -1,7 +1,7 @@
 # codex-skills-project
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-oozoofrog/codex--skills--project-181717?logo=github)](https://github.com/oozoofrog/codex-skills-project)
-[![Release](https://img.shields.io/github/v/release/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/releases/tag/v0.1.0)
+[![Release](https://img.shields.io/github/v/release/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 [![Issues](https://img.shields.io/github/issues/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/oozoofrog/codex-skills-project)](https://github.com/oozoofrog/codex-skills-project)
@@ -16,6 +16,14 @@
 - **검토는 가능하면 generator/evaluator 분리와 evidence 기반 harness로 수행**
 
 즉, 이 저장소는 “repo-local workspace 자체”보다 **전역 스킬 배포 원본**에 더 가깝게 운영합니다.
+
+## 빠른 링크
+
+- Latest release: https://github.com/oozoofrog/codex-skills-project/releases/latest
+- CHANGELOG: `CHANGELOG.md`
+- v0.2.0 release notes: `docs/release-notes-v0.2.0.md`
+- v0.2.0 announcement draft: `docs/release-announcement-v0.2.0.md`
+- v0.3.0 candidate roadmap: `docs/roadmap-v0.3.0.md`
 
 ## 가장 쉬운 설치
 
