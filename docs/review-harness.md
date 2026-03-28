@@ -14,6 +14,9 @@
 2. review policy는 공통 문서로 분리하며
 3. 필요한 스킬만 `Review Harness` 섹션으로 선언합니다.
 
+자동 진행 제어 로직의 상세 표준안은 `docs/evaluation-loop-standard.md`,
+스킬별 평가축/증거/다음 행동 표는 `docs/evaluation-loop-skill-matrix.md`를 따릅니다.
+
 ## 용어
 
 - **Planner**: 범위, 완료 조건, 아티팩트 형식을 먼저 정리하는 역할
