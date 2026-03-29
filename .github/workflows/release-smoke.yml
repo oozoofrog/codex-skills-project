@@ -26,4 +26,6 @@ jobs:
         run: git fetch --force --tags origin
 
       - name: Run release helper smoke checks
-        run: python3 scripts/run_release_smoke_checks.py --skip-gh-auth
+        run: |
+          export RELEASE_SMOKE_LOG_PATH=/tmp/release-smoke.log
+          python3 scripts/run_release_smoke_checks.py --skip-gh-auth | tee "$RELEASE_SMOKE_LOG_PATH"

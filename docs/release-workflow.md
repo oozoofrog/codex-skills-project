@@ -110,6 +110,7 @@ python3 scripts/run_release_smoke_checks.py
 
 - 현재 최신 태그 기준 `check / plan`
 - 임시 worktree에서 다음 patch 버전 fixture 기준 `check / plan`
+- 각 `plan` 출력에서 draft 기본값과 `--publish-release` 분기를 함께 검증
 
 을 실행합니다.
 
@@ -118,3 +119,18 @@ CI에서는 `--skip-gh-auth`와 함께 사용합니다.
 ```bash
 python3 scripts/run_release_smoke_checks.py --skip-gh-auth
 ```
+
+현재 smoke check는 총 6개 시나리오를 봅니다.
+
+1. latest tag `check`
+2. latest tag `plan`
+3. latest tag `plan --publish-release`
+4. synthetic next patch `check`
+5. synthetic next patch `plan`
+6. synthetic next patch `plan --publish-release`
+
+핵심 검증 포인트:
+
+- `check` 출력에 release summary와 성공 문구가 있는지
+- 기본 `plan` 출력에 `--draft`가 포함되는지
+- `plan --publish-release` 출력에는 `--draft`가 빠지는지
