@@ -6,6 +6,7 @@
 
 - `scripts/codex_goal_research_loop.py`
 - `scripts/goal-research-loop.sh`
+- `scripts/run_goal_research_loop_regression.py`
 - `templates/program.md`
 - `templates/contract.md`
 - `templates/state_snapshot.md`
@@ -100,6 +101,21 @@ python3 scripts/install_global_skills.py --dest /tmp/codex-skills-check --mode c
   현재 전역 설치 경로에 같은 스킬이 이미 있으면 non-zero로 끝날 수 있습니다.
 - skill 구조 검증이나 runner smoke check 목적이면,
   전역 목적지를 직접 건드리기보다 `/tmp/...` 목적지에서 dry-run / copy-install을 확인하는 편이 재현 가능하고 안전합니다.
+
+## Regression automation
+
+runner 회귀 검증은 아래 스크립트로 수행합니다.
+
+```bash
+python3 scripts/run_goal_research_loop_regression.py
+```
+
+현재 회귀 시나리오:
+
+- orphan round `reconcile`
+- `resume` 경유 이어달리기
+- `prompt_profile=standard|lightweight` 차이
+- timeout fallback
 
 ## 기본 흐름
 
