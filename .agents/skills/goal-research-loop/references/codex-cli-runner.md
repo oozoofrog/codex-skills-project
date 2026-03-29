@@ -77,8 +77,9 @@
 
 1. 새 루프면 `init`
 2. 이어받기 전 점검이면 `status`
-3. bounded execution이면 `run --max-rounds`
-4. explicit autonomous opt-in일 때만 Python runner의 `--loop-forever`
+3. interrupted run 또는 append 누락이 의심되면 Python runner의 `reconcile`
+4. bounded execution이면 `run --max-rounds`
+5. explicit autonomous opt-in일 때만 Python runner의 `--loop-forever`
 
 ## Validation note
 
@@ -154,6 +155,20 @@ python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
   --search \
   --full-auto
 ```
+
+### 3. interrupted / orphan round 복구
+
+라운드 디렉터리에 `response.json` 또는 `last-message.json`이 남았는데
+`ledger.tsv`에 아직 append되지 않았다면 아래로 복구할 수 있습니다.
+
+```bash
+python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
+  reconcile \
+  --workspace /path/to/workspace
+```
+
+`status`와 `run`도 내부적으로 recoverable / pending round를 계산하고
+`runtime/status.json`을 갱신합니다.
 
 ### 4) 장시간 실행
 
