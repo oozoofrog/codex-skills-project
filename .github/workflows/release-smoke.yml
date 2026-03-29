@@ -1,0 +1,29 @@
+name: release-smoke
+
+on:
+  push:
+    branches:
+      - main
+      - 'codex/**'
+  pull_request:
+
+jobs:
+  release-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch tags
+        run: git fetch --force --tags origin
+
+      - name: Run release helper smoke checks
+        run: python3 scripts/run_release_smoke_checks.py --skip-gh-auth
