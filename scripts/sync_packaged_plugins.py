@@ -7,6 +7,7 @@ import shutil
 import subprocess
 from html import escape
 from pathlib import Path
+from packaged_plugin_parity import default_prompt_source_skills, short_description_source_skill
 
 ROOT = Path(__file__).resolve().parent.parent
 SKILLS_ROOT = ROOT / '.agents' / 'skills'
@@ -399,17 +400,25 @@ def build_assets(plugin_root: Path, spec: dict) -> None:
 
 def build_plugin_manifest(spec: dict) -> dict:
     interface = dict(spec['interface'])
-    if len(spec['skills']) == 1:
-        source_meta = source_openai_metadata(spec['skills'][0])
+    source_for_short = short_description_source_skill(spec['name'], spec['skills'])
+    if source_for_short:
+        source_meta = source_openai_metadata(source_for_short)
         if source_meta.get('short_description'):
             interface['shortDescription'] = source_meta['short_description']
-        if source_meta.get('default_prompt'):
-            prompts = list(interface.get('defaultPrompt', []))
-            if prompts:
-                prompts[0] = source_meta['default_prompt']
+
+    prompt_sources = default_prompt_source_skills(spec['name'], spec['skills'])
+    if prompt_sources:
+        prompts = list(interface.get('defaultPrompt', []))
+        for idx, source_skill in enumerate(prompt_sources):
+            source_meta = source_openai_metadata(source_skill)
+            prompt = source_meta.get('default_prompt')
+            if not prompt:
+                continue
+            if idx < len(prompts):
+                prompts[idx] = prompt
             else:
-                prompts = [source_meta['default_prompt']]
-            interface['defaultPrompt'] = prompts
+                prompts.append(prompt)
+        interface['defaultPrompt'] = prompts
     interface['brandColor'] = spec['color']
     interface['composerIcon'] = './assets/icon.png'
     interface['logo'] = './assets/logo.png'

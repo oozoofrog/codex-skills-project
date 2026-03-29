@@ -25,6 +25,8 @@ description: Codex 플러그인/스킬 저장소를 감사하고 개선합니다
 ## Use resources
 - `references/official-spec.md`
 - `scripts/audit_codex_plugin_repo.py`
+- `schemas/report.schema.json`
+- `../../../docs/evaluator-output-contract.md`
 - 필요 시 현재 저장소에 별도로 있는 `codex-skill-audit` 또는 동등한 skill audit 도구를 함께 사용
 
 ## Workflow
@@ -57,3 +59,8 @@ description: Codex 플러그인/스킬 저장소를 감사하고 개선합니다
 - `critical / warning / info / strength` 결과
 - 안전한 자동 수정 후보
 - 사람이 직접 판단해야 할 packaging 리스크
+
+deterministic audit script는 아래 artifact를 함께 지원하는 편을 권장합니다.
+
+- stdout: 사람이 읽는 Markdown 보고서
+- `--json-out <path>`: `schemas/report.schema.json`에 맞는 machine summary JSON
