@@ -15,7 +15,8 @@
 ```bash
 python3 scripts/sync_packaged_plugins.py
 python3 scripts/run_local_plugin_smoke_checks.py
-python3 scripts/run_local_plugin_load_assistant.py --run-smoke
+python3 scripts/run_local_plugin_ui_checks.py --write-report
+python3 scripts/run_local_plugin_load_assistant.py --run-smoke --run-ui-checks
 ```
 
 그 다음:
@@ -29,6 +30,7 @@ python3 scripts/run_local_plugin_load_assistant.py --run-smoke
 - `.agents/plugins/marketplace.json`이 현재 packaged plugins와 맞는지
 - `plugins/*/.codex-plugin/plugin.json` 경로 참조가 깨지지 않았는지
 - packaged assets가 모두 존재하는지
+- `reports/local-plugin-ui-report-*.md`에 UI 기대 상태가 정리됐는지
 - Codex UI에서 실제로 plugin이 로드되는지
 
 ### 빠른 확인용 starter prompts
@@ -73,6 +75,7 @@ python3 scripts/sync_packaged_plugins.py
 
 ```bash
 python3 scripts/run_local_plugin_smoke_checks.py
+python3 scripts/run_local_plugin_ui_checks.py --write-report
 ```
 
 필요하면 개별 검증도 돌립니다.
@@ -92,14 +95,30 @@ python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py .
 ### Step 3. 로컬 로딩 체크리스트 생성
 
 ```bash
-python3 scripts/run_local_plugin_load_assistant.py --run-smoke
+python3 scripts/run_local_plugin_load_assistant.py --run-smoke --run-ui-checks
 ```
 
 이 스크립트는:
 
 - 정적 smoke check를 한 번 더 돌리고
+- UI verification report도 생성하고
 - `reports/local-plugin-load-checklist-*.md`를 생성해
 - 실제 UI 확인 순서를 정리해 줍니다.
+
+### Step 3a. UI verification report만 따로 생성
+
+```bash
+python3 scripts/run_local_plugin_ui_checks.py --write-report
+```
+
+이 스크립트는 plugin별로 아래 기대 상태를 정리합니다.
+
+- display name
+- category
+- icon / logo / screenshots 경로
+- screenshot 개수
+- starter prompt 개수와 예시 prompt
+- 수동 UI 체크리스트
 
 ### Step 4. Codex UI 로딩 확인
 
@@ -171,7 +190,8 @@ python3 scripts/sync_packaged_plugins.py
 ```bash
 python3 scripts/sync_packaged_plugins.py
 python3 scripts/run_local_plugin_smoke_checks.py
-python3 scripts/run_local_plugin_load_assistant.py --run-smoke
+python3 scripts/run_local_plugin_ui_checks.py --write-report
+python3 scripts/run_local_plugin_load_assistant.py --run-smoke --run-ui-checks
 ```
 
 그 다음 Codex를 재시작하고, generated checklist를 따라 UI에서 수동 확인합니다.
@@ -182,6 +202,7 @@ python3 scripts/run_local_plugin_load_assistant.py --run-smoke
 
 - `scripts/sync_packaged_plugins.py`
 - `scripts/run_local_plugin_smoke_checks.py`
+- `scripts/run_local_plugin_ui_checks.py`
 - `scripts/run_local_plugin_load_assistant.py`
 - `plugins/README.md`
 - `.agents/plugins/marketplace.json`

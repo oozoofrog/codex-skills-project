@@ -107,6 +107,9 @@ def main() -> int:
     overall_ok &= check_assets()
     overall_ok &= check_manifest_paths()
 
+    ok, _ = run(['python3', 'scripts/run_local_plugin_ui_checks.py', '--strict'], 'UI verification report')
+    overall_ok &= ok
+
     ok, _ = run(['python3', '.agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py', '.'], 'plugin-doctor 감사')
     overall_ok &= ok
     ok, _ = run(['python3', '.agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py', '.'], 'skill audit')
