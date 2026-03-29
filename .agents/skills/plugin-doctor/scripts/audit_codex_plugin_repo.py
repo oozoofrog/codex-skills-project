@@ -45,6 +45,10 @@ def normalize_multiline(text: str):
     return '\n'.join(lines)
 
 
+def code_refs_from_bullets(text: str):
+    return re.findall(r'(?m)^-\s*`([^`]+)`', text)
+
+
 def load_text(path: Path):
     return path.read_text(encoding='utf-8', errors='ignore')
 
@@ -311,6 +315,57 @@ def main():
                             f'packaged/source openai.yaml presence differs from `{source_openai.relative_to(target)}`',
                         )
 
+        readme_path = plugin_root / 'README.md'
+        if readme_path.exists():
+            readme_text = load_text(readme_path)
+            included_skills = extract_markdown_section(readme_text, 'Included skills')
+            if not included_skills:
+                add(findings, 'warning', str(readme_path.relative_to(target)), 'README is missing `## Included skills` section')
+            elif packaged_skill_names:
+                readme_skill_refs = sorted(code_refs_from_bullets(included_skills))
+                expected_skill_refs = sorted(packaged_skill_names)
+                if readme_skill_refs != expected_skill_refs:
+                    add(
+                        findings,
+                        'warning',
+                        str(readme_path.relative_to(target)),
+                        f'README Included skills drifted from packaged skills directory: expected {expected_skill_refs}, got {readme_skill_refs}',
+                    )
+
+            asset_section = extract_markdown_section(readme_text, 'Packaged assets')
+            if not asset_section:
+                add(findings, 'warning', str(readme_path.relative_to(target)), 'README is missing `## Packaged assets` section')
+            else:
+                required_assets = [
+                    'assets/icon.svg',
+                    'assets/icon.png',
+                    'assets/logo.svg',
+                    'assets/logo.png',
+                    'assets/screenshot.svg',
+                    'assets/screenshot.png',
+                ]
+                for asset_ref in required_assets:
+                    if asset_ref not in asset_section:
+                        add(findings, 'warning', str(readme_path.relative_to(target)), f'README Packaged assets section is missing `{asset_ref}`')
+
+                optional_assets = {
+                    'assets/browser-capture.png': (plugin_root / 'assets' / 'browser-capture.png').exists(),
+                    'assets/live-capture.png': (plugin_root / 'assets' / 'live-capture.png').exists(),
+                }
+                for asset_ref, exists in optional_assets.items():
+                    listed = asset_ref in asset_section
+                    if exists and not listed:
+                        add(findings, 'warning', str(readme_path.relative_to(target)), f'README Packaged assets section should list `{asset_ref}` because the asset exists')
+                    if not exists and listed:
+                        add(findings, 'warning', str(readme_path.relative_to(target)), f'README Packaged assets section lists `{asset_ref}` but the asset file is absent')
+
+                has_mcp_file = (plugin_root / '.mcp.json').exists()
+                bundled_mcp = extract_markdown_section(readme_text, 'Bundled MCP')
+                if has_mcp_file and not bundled_mcp:
+                    add(findings, 'warning', str(readme_path.relative_to(target)), 'README should include `## Bundled MCP` because .mcp.json exists')
+                if not has_mcp_file and bundled_mcp:
+                    add(findings, 'warning', str(readme_path.relative_to(target)), 'README has `## Bundled MCP` but the plugin has no .mcp.json')
+
         mcp_value = data.get('mcpServers')
         if isinstance(mcp_value, str):
             mcp_path = validate_path_ref(plugin_root, mcp_value, findings, str(rel), 'mcpServers path')
@@ -345,6 +400,18 @@ def main():
                 else:
                     for idx, shot in enumerate(screenshots, 1):
                         validate_path_ref(plugin_root, shot, findings, str(rel), f'interface.screenshots[{idx}]')
+
+            if isinstance(screenshots, list):
+                optional_screenshot_refs = {
+                    './assets/browser-capture.png': (plugin_root / 'assets' / 'browser-capture.png').exists(),
+                    './assets/live-capture.png': (plugin_root / 'assets' / 'live-capture.png').exists(),
+                }
+                for shot_ref, exists in optional_screenshot_refs.items():
+                    listed = shot_ref in screenshots
+                    if exists and not listed:
+                        add(findings, 'warning', str(rel), f'plugin interface.screenshots should include `{shot_ref}` because the asset exists')
+                    if not exists and listed:
+                        add(findings, 'warning', str(rel), f'plugin interface.screenshots includes `{shot_ref}` but the asset file is absent')
 
         if len(packaged_skill_names) == 1:
             source_openai = target / '.agents' / 'skills' / packaged_skill_names[0] / 'agents' / 'openai.yaml'
