@@ -70,6 +70,7 @@
 ```bash
 ~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh init /path/to/workspace "objective"
 ~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh status /path/to/workspace
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh resume /path/to/workspace --max-rounds 3 --search --full-auto
 ~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh run /path/to/workspace --max-rounds 3 --search --full-auto
 ```
 
@@ -78,8 +79,9 @@
 1. 새 루프면 `init`
 2. 이어받기 전 점검이면 `status`
 3. interrupted run 또는 append 누락이 의심되면 Python runner의 `reconcile`
-4. bounded execution이면 `run --max-rounds`
-5. explicit autonomous opt-in일 때만 Python runner의 `--loop-forever`
+4. recoverable round를 반영하고 바로 이어 돌리려면 shell wrapper의 `resume`
+5. bounded execution이면 `run --max-rounds`
+6. explicit autonomous opt-in일 때만 Python runner의 `--loop-forever`
 
 ## Validation note
 
@@ -169,6 +171,17 @@ python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
 
 `status`와 `run`도 내부적으로 recoverable / pending round를 계산하고
 `runtime/status.json`을 갱신합니다.
+
+recoverable round를 반영하고 바로 다음 라운드로 이어가려면:
+
+```bash
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh \
+  resume \
+  /path/to/workspace \
+  --max-rounds 3 \
+  --search \
+  --full-auto
+```
 
 ### 4) 장시간 실행
 
