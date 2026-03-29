@@ -1,0 +1,26 @@
+name: goal-research-loop-smoke
+
+on:
+  push:
+    branches:
+      - main
+      - 'codex/**'
+  pull_request:
+
+jobs:
+  goal-research-loop-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run goal-research-loop regression checks
+        run: |
+          export GOAL_LOOP_REGRESSION_LOG_PATH=/tmp/goal-loop-smoke.log
+          python3 scripts/run_goal_research_loop_regression.py | tee "$GOAL_LOOP_REGRESSION_LOG_PATH"
