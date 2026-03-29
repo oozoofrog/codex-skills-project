@@ -5,6 +5,10 @@ import re
 import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(ROOT / 'scripts'))
+from packaged_plugin_parity import default_prompt_source_skills, short_description_source_skill
+
 try:
     import tomllib  # Python 3.11+
 except Exception:
@@ -435,28 +439,38 @@ def main():
                     if not exists and listed:
                         add(findings, 'warning', str(rel), f'plugin interface.screenshots includes `{shot_ref}` but the asset file is absent')
 
-        if len(packaged_skill_names) == 1:
-            source_openai = target / '.agents' / 'skills' / packaged_skill_names[0] / 'agents' / 'openai.yaml'
-            if source_openai.exists() and isinstance(interface, dict):
+        if packaged_skill_names and isinstance(interface, dict):
+            short_source_skill = short_description_source_skill(plugin_name, packaged_skill_names)
+            if short_source_skill:
+                source_openai = target / '.agents' / 'skills' / short_source_skill / 'agents' / 'openai.yaml'
+                if source_openai.exists():
+                    source_yaml = load_text(source_openai)
+                    source_short = parse_openai_interface_field(source_yaml, 'short_description')
+                    if source_short and interface.get('shortDescription') != source_short:
+                        add(
+                            findings,
+                            'warning',
+                            str(rel),
+                            'plugin interface.shortDescription drifted from source '
+                            f'`{source_openai.relative_to(target)}`',
+                        )
+
+            prompt_sources = default_prompt_source_skills(plugin_name, packaged_skill_names)
+            prompts = interface.get('defaultPrompt')
+            prompts = prompts if isinstance(prompts, list) else []
+            for idx, source_skill in enumerate(prompt_sources):
+                source_openai = target / '.agents' / 'skills' / source_skill / 'agents' / 'openai.yaml'
+                if not source_openai.exists():
+                    continue
                 source_yaml = load_text(source_openai)
-                source_short = parse_openai_interface_field(source_yaml, 'short_description')
-                if source_short and interface.get('shortDescription') != source_short:
-                    add(
-                        findings,
-                        'warning',
-                        str(rel),
-                        'plugin interface.shortDescription drifted from source '
-                        f'`{source_openai.relative_to(target)}`',
-                    )
                 source_prompt = parse_openai_interface_field(source_yaml, 'default_prompt')
-                prompts = interface.get('defaultPrompt')
-                first_prompt = prompts[0] if isinstance(prompts, list) and prompts else ''
-                if source_prompt and first_prompt != source_prompt:
+                actual_prompt = prompts[idx] if idx < len(prompts) else ''
+                if source_prompt and actual_prompt != source_prompt:
                     add(
                         findings,
                         'warning',
                         str(rel),
-                        'plugin interface.defaultPrompt[0] drifted from source '
+                        f'plugin interface.defaultPrompt[{idx}] drifted from source '
                         f'`{source_openai.relative_to(target)}`',
                     )
 

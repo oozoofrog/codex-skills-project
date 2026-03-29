@@ -15,7 +15,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Apple Craft",
-    "shortDescription": "Swift, SwiftUI, UIKit, and Xcode support",
+    "shortDescription": "Swift, SwiftUI, UIKit, AppKit, and Xcode development",
     "longDescription": "Build, troubleshoot, review, and orchestrate Apple platform work using Xcode tools plus bundled reference docs and evidence-driven verification for current Apple APIs.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
@@ -26,9 +26,9 @@
       "Planning"
     ],
     "defaultPrompt": [
-      "Diagnose this SwiftUI build error and suggest the minimal fix.",
-      "Review this branch for Apple-platform-specific correctness risks with build or diagnostics evidence.",
-      "Plan and implement a new Apple feature with a spec and skeptical evaluation loop."
+      "Help with Apple platform development using Xcode tools, official docs, and bundled Apple references, and verify changes with build, preview, or diagnostics evidence when possible.",
+      "Review Swift and Apple platform code using Apple-specific correctness, API usage, and framework guidance rather than generic style-only comments.",
+      "Run a long Apple platform workflow with planner/builder/evaluator roles, PLAN→DESIGN→BUILD→EVALUATE loops, shared artifacts, and evidence-driven Xcode verification."
     ],
     "brandColor": "#7C3AED",
     "composerIcon": "./assets/icon.png",

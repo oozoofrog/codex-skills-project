@@ -14,7 +14,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Agent Context",
-    "shortDescription": "Layered AGENTS.md design and verification",
+    "shortDescription": "Design layered AGENTS.md instructions for Codex",
     "longDescription": "Scaffold, validate, and audit layered Codex instruction architectures with root and nested AGENTS.md files, lightweight supporting docs, and explicit verify/audit follow-through.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
@@ -25,9 +25,9 @@
       "Validate"
     ],
     "defaultPrompt": [
-      "Analyze this repository and propose a layered AGENTS.md structure.",
-      "Scaffold AGENTS.md and nested instruction files for this repo, then prepare them for verify/audit checks.",
-      "Verify whether the current AGENTS.md files still match the codebase and where guidance has drifted."
+      "Design or refactor a Codex instruction architecture using root AGENTS.md, nested AGENTS.md, optional AGENTS.override.md, and lightweight supporting docs.",
+      "Analyze this repository, scaffold a minimal Codex instruction architecture with AGENTS.md, nested AGENTS.md where useful, and optional CONTEXT.md, then leave it ready for follow-up verify/audit checks.",
+      "Verify AGENTS.md, AGENTS.override.md, CONTEXT.md, and linked docs against the current repository and report broken references, stale commands, or inaccurate claims."
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.png",
