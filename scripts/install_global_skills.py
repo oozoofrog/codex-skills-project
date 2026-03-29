@@ -60,6 +60,10 @@ def replace_frontmatter_name(text: str, new_name: str) -> str:
     return '\n'.join(lines) + ('\n' if text.endswith('\n') else '')
 
 
+def path_exists(path: Path) -> bool:
+    return path.exists() or path.is_symlink()
+
+
 def load_manifest() -> list[SkillSpec]:
     raw = json.loads(read_text(MANIFEST_PATH))
     specs: list[SkillSpec] = []
@@ -153,6 +157,70 @@ def validate_install(spec: SkillSpec, dest_dir: Path) -> None:
         raise ValueError(
             f'frontmatter name 불일치: expected={spec.install_name} actual={fm.get("name")}'
         )
+    if not fm.get('description'):
+        raise ValueError(f'frontmatter description 누락: {skill_md}')
+
+
+def format_plan_status(dest_dir: Path, *, overwrite: bool, dry_run: bool) -> str:
+    if not path_exists(dest_dir):
+        return ' [new]'
+    if dry_run:
+        if overwrite:
+            return ' [exists; dry-run would replace]'
+        return ' [exists; dry-run only, real install needs --overwrite]'
+    if overwrite:
+        return ' [exists; will replace]'
+    return ' [exists; install will fail without --overwrite]'
+
+
+def validate_installed_tree(
+    selected_specs: list[SkillSpec],
+    *,
+    all_specs: list[SkillSpec],
+    dest_root: Path,
+) -> None:
+    if not dest_root.exists():
+        raise ValueError(f'설치 대상 디렉토리가 없습니다: {dest_root}')
+
+    by_source = {spec.source: spec for spec in all_specs}
+    problems: list[str] = []
+
+    print('# Installed skill validation')
+    print(f'- destination: {dest_root}')
+    print(f'- selected: {", ".join(spec.install_name for spec in selected_specs)}')
+
+    for spec in selected_specs:
+        dest_dir = dest_root / spec.install_name
+        notes = ['frontmatter: ok']
+        if spec.install_name != spec.source:
+            notes.append(f'alias: {spec.source} -> {spec.install_name}')
+
+        try:
+            if not path_exists(dest_dir):
+                raise ValueError(f'설치 경로 누락: {dest_dir}')
+            validate_install(spec, dest_dir)
+
+            if spec.dependencies:
+                dep_labels: list[str] = []
+                for dep_source in spec.dependencies:
+                    dep_spec = by_source[dep_source]
+                    dep_dir = dest_root / dep_spec.install_name
+                    if not path_exists(dep_dir):
+                        raise ValueError(
+                            f'dependency 누락: {spec.install_name} requires {dep_spec.install_name}'
+                        )
+                    dep_labels.append(dep_spec.install_name)
+                notes.append(f'deps: {", ".join(dep_labels)}')
+            else:
+                notes.append('deps: -')
+
+            print(f'  - OK {dest_dir} [{"; ".join(notes)}]')
+        except Exception as exc:
+            problems.append(str(exc))
+            print(f'  - FAIL {dest_dir} [{exc}]')
+
+    if problems:
+        raise ValueError('설치 검증 실패:\n- ' + '\n- '.join(problems))
 
 
 def build_lookup(specs: list[SkillSpec]) -> tuple[dict[str, SkillSpec], dict[str, SkillSpec]]:
@@ -242,17 +310,19 @@ def install_selected(
     dry_run: bool,
 ) -> None:
     ensure_supported_mode(mode)
-    dest_root.mkdir(parents=True, exist_ok=True)
+    if not dry_run:
+        dest_root.mkdir(parents=True, exist_ok=True)
 
     for spec in selected_specs:
         dest_dir = dest_root / spec.install_name
-        if dest_dir.exists() or dest_dir.is_symlink():
+        if path_exists(dest_dir):
+            if dry_run:
+                continue
             if not overwrite:
                 raise FileExistsError(
                     f'이미 존재하는 설치 경로: {dest_dir} (덮어쓰려면 --overwrite 사용)'
                 )
-            if not dry_run:
-                remove_existing(dest_dir)
+            remove_existing(dest_dir)
 
         if dry_run:
             continue
@@ -299,6 +369,11 @@ def main() -> int:
         action='store_true',
         help='manifest 기준 설치 가능한 스킬 목록을 출력합니다.',
     )
+    parser.add_argument(
+        '--validate-installed',
+        action='store_true',
+        help='설치 대상 디렉토리의 alias/dependency/frontmatter 상태를 검증합니다.',
+    )
     args = parser.parse_args()
 
     specs = load_manifest()
@@ -311,6 +386,18 @@ def main() -> int:
     requested_sources = resolve_requested_sources(args.skills, specs)
     selected_specs = expand_dependencies(requested_sources, specs)
     dest_root = Path(args.dest).expanduser().resolve()
+
+    if args.validate_installed and args.dry_run:
+        raise ValueError('--validate-installed와 --dry-run은 함께 사용할 수 없습니다.')
+
+    if args.validate_installed:
+        validate_installed_tree(
+            selected_specs,
+            all_specs=specs,
+            dest_root=dest_root,
+        )
+        print('\n설치 검증 완료.')
+        return 0
 
     print(f'# Global skill install plan')
     print(f'- repo root: {ROOT}')
@@ -329,7 +416,12 @@ def main() -> int:
             if spec.dependencies
             else ''
         )
-        print(f'  - {dest_dir}{alias_note}{dep_note}')
+        status_note = format_plan_status(
+            dest_dir,
+            overwrite=args.overwrite,
+            dry_run=args.dry_run,
+        )
+        print(f'  - {dest_dir}{alias_note}{dep_note}{status_note}')
         if spec.alias_reason:
             print(f'    ↳ {spec.alias_reason}')
 
