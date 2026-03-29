@@ -1,4 +1,4 @@
-# v0.4.0 발표문 초안
+# v0.4.0 발표문
 
 `codex-skills-project` **v0.4.0**은 저장소의 핵심 운영 흐름을
 **더 자동화되고, 더 재현 가능하며, 더 기계적으로 검증 가능한 상태**로 끌어올리는 릴리스입니다.
@@ -30,6 +30,12 @@
 - evaluator output contract + formatter/schema
 - goal-research-loop resume/reconcile/runtime status
 - local plugin UI verification report
+
+## 링크
+
+- Release: https://github.com/oozoofrog/codex-skills-project/releases/tag/v0.4.0
+- Release notes: `docs/release-notes-v0.4.0.md`
+- CHANGELOG: `CHANGELOG.md`
 
 ## 검증
 
