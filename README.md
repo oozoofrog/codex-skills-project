@@ -292,6 +292,7 @@ python3 scripts/install_global_skills.py --dry-run
 python3 scripts/install_global_skills.py --dest /tmp/codex-skills-test --mode copy --overwrite
 python3 scripts/install_global_skills.py --dest /tmp/codex-skills-test --validate-installed
 python3 scripts/install_global_skills.py --validate-installed
+python3 scripts/run_global_install_smoke_checks.py
 python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py .
 ```
 

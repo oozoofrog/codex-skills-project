@@ -1,0 +1,26 @@
+name: install-smoke
+
+on:
+  push:
+    branches:
+      - main
+      - 'codex/**'
+  pull_request:
+
+jobs:
+  install-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run global install smoke checks
+        run: |
+          export INSTALL_SMOKE_LOG_PATH=/tmp/install-smoke.log
+          python3 scripts/run_global_install_smoke_checks.py | tee "$INSTALL_SMOKE_LOG_PATH"
