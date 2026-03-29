@@ -92,6 +92,13 @@ python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
   reconcile \
   --workspace /path/to/workspace
 
+~/.codex/skills/goal-research-loop/scripts/goal-research-loop.sh \
+  resume \
+  /path/to/workspace \
+  --max-rounds 3 \
+  --search \
+  --full-auto
+
 python3 ~/.codex/skills/goal-research-loop/scripts/codex_goal_research_loop.py \
   run \
   --workspace /path/to/workspace \
