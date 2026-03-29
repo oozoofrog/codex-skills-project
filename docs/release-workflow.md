@@ -97,3 +97,24 @@ python3 scripts/release_helper.py plan \
 3. `python3 scripts/release_helper.py plan --version vX.Y.Z`
 4. draft가 필요하면 `publish`
 5. 공개 시점에 `--publish-release`
+
+## 회귀 검증
+
+release helper 자체의 회귀 검증은 아래 스크립트로 돌립니다.
+
+```bash
+python3 scripts/run_release_smoke_checks.py
+```
+
+이 스크립트는:
+
+- 현재 최신 태그 기준 `check / plan`
+- 임시 worktree에서 다음 patch 버전 fixture 기준 `check / plan`
+
+을 실행합니다.
+
+CI에서는 `--skip-gh-auth`와 함께 사용합니다.
+
+```bash
+python3 scripts/run_release_smoke_checks.py --skip-gh-auth
+```
