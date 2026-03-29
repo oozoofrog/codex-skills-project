@@ -39,7 +39,8 @@ def main() -> int:
         '',
         '1. `python3 scripts/sync_packaged_plugins.py` 실행',
         '2. `python3 scripts/run_local_plugin_smoke_checks.py` 실행',
-        '3. Codex를 현재 저장소 루트에서 재시작',
+        '3. 필요하면 `python3 scripts/run_local_plugin_load_assistant.py --run-smoke`로 체크리스트를 다시 생성',
+        '4. Codex를 현재 저장소 루트에서 재시작',
         '',
         '## Plugins to verify',
         '',
@@ -66,6 +67,8 @@ def main() -> int:
     lines.extend([
         '## Notes',
         '',
+        '- 빠른 확인 흐름은 docs/local-plugin-testing.md의 `1. 빠른 확인` 절차를 따른다.',
+        '- 더 자세한 유지보수 순서는 docs/local-plugin-testing.md의 `2. 유지보수 전체 절차`를 따른다.',
         '- 현재 packaged screenshot은 representative preview이며, live Codex UI capture는 아닙니다.',
         '- 실제 live capture로 교체하려면 plugin 로딩 후 수동 캡처 또는 별도 UI 자동화가 필요합니다.',
         '',
