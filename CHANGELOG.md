@@ -1,5 +1,81 @@
 # CHANGELOG
 
+## v0.4.0 — 2026-03-29
+
+관련 문서:
+
+- release notes: `docs/release-notes-v0.4.0.md`
+- announcement draft: `docs/release-announcement-v0.4.0.md`
+- roadmap: `docs/roadmap-v0.4.0.md`
+- release workflow: `docs/release-workflow.md`
+
+### 핵심 변경
+
+- release helper / install / goal-research-loop 회귀 검증을 CI에 연결해 release·install·runner 레이어의 자동 기준선을 확보했습니다.
+- packaged plugin parity를 single-skill에서 multi-skill, README, optional assets까지 확장했습니다.
+- evaluator-native skill 출력 계약을 공통 contract + machine summary schema 기반으로 정리했습니다.
+- `agent-context-verify`, `apple-review`, `agent-context-audit`에 deterministic formatter/script 흐름을 추가했습니다.
+- `goal-research-loop`에 `reconcile`, `resume`, runtime status를 도입하고 regression suite로 보강했습니다.
+- local plugin testing 문서를 quick path / maintenance path로 정리하고, UI verification report 흐름을 추가했습니다.
+
+### 세부 변경
+
+#### release / install / regression automation
+
+- `scripts/release_helper.py`
+- `scripts/run_release_smoke_checks.py`
+- `scripts/run_global_install_smoke_checks.py`
+- `scripts/run_goal_research_loop_regression.py`
+- `.github/workflows/release-smoke.yml`
+- `.github/workflows/install-smoke.yml`
+- `.github/workflows/goal-research-loop-smoke.yml`
+
+#### packaged plugin parity
+
+- `scripts/packaged_plugin_parity.py`
+- `plugin-doctor` drift 검사 확장
+- multi-skill plugin parity 규칙 반영
+  - `agent-context`
+  - `apple-craft`
+- packaged README / optional assets / screenshots parity 반영
+
+#### evaluator output standardization
+
+- `docs/evaluator-output-contract.md`
+- `codex-skill-audit` schema + `--json-out`
+- `plugin-doctor` schema + `--json-out`
+- `agent-context-verify` deterministic script + schema
+- `apple-review` deterministic formatter + schema
+- `agent-context-audit` deterministic formatter + schema
+- grouped summary / recommended fixes 포맷 보강
+
+#### goal-research-loop runner hardening
+
+- `reconcile`
+- `resume`
+- `runtime/status.json`
+- orphan round artifact 복구
+- pending round 보호
+- prompt profile / timeout / resume regression 검증
+
+#### local plugin testing
+
+- `docs/local-plugin-testing.md`
+- `scripts/run_local_plugin_load_assistant.py`
+- `scripts/run_local_plugin_ui_checks.py`
+
+### 검증에 사용한 명령
+
+```bash
+python3 scripts/run_release_smoke_checks.py --skip-gh-auth
+python3 scripts/run_global_install_smoke_checks.py
+python3 scripts/run_goal_research_loop_regression.py
+python3 scripts/run_local_plugin_smoke_checks.py --skip-regenerate
+python3 scripts/run_local_plugin_ui_checks.py --strict
+python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py .
+python3 .agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py .
+```
+
 이 문서는 이 저장소의 사용자 관점 변화와 릴리스 포인트를 기록합니다.
 
 ## v0.3.0 — 2026-03-29
