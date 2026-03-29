@@ -14,7 +14,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Hey Codex",
-    "shortDescription": "Run a separate Codex CLI task only on explicit request",
+    "shortDescription": "Delegate to a separate Codex CLI run only when explicitly asked",
     "longDescription": "Invoke a second Codex CLI process for isolated read-only analysis, review, suggestions, or carefully scoped full-auto runs only when the user explicitly asks.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
@@ -24,7 +24,7 @@
       "Review"
     ],
     "defaultPrompt": [
-      "Ask a separate Codex CLI run for a second opinion on this refactor.",
+      "Invoke a separate Codex CLI process for an isolated second opinion, read-only analysis, or carefully sandboxed full-auto edit only when the user explicitly asks for it.",
       "Run a read-only Codex review on the current branch.",
       "Delegate this task to another Codex process only because I am explicitly asking for it, then summarize the result."
     ],

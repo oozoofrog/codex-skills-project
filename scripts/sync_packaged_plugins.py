@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 from html import escape
@@ -13,6 +14,29 @@ PLUGINS_ROOT = ROOT / 'plugins'
 MARKETPLACE_PATH = ROOT / '.agents' / 'plugins' / 'marketplace.json'
 LIVE_CAPTURE_SOURCE = ROOT / 'assets' / 'live-captures' / 'codex-live-capture.png'
 BROWSER_CAPTURE_DIR = ROOT / 'assets' / 'browser-captures'
+
+
+def load_text(path: Path) -> str:
+    return path.read_text(encoding='utf-8', errors='ignore')
+
+
+def parse_openai_interface_field(yaml_text: str, field: str) -> str:
+    match = re.search(rf'(?m)^\s*{re.escape(field)}:\s*(.+?)\s*$', yaml_text)
+    if not match:
+        return ''
+    return match.group(1).strip().strip('"').strip("'")
+
+
+def source_openai_metadata(skill_name: str) -> dict[str, str]:
+    yaml_path = SKILLS_ROOT / skill_name / 'agents' / 'openai.yaml'
+    if not yaml_path.exists():
+        return {}
+    yaml_text = load_text(yaml_path)
+    return {
+        'display_name': parse_openai_interface_field(yaml_text, 'display_name'),
+        'short_description': parse_openai_interface_field(yaml_text, 'short_description'),
+        'default_prompt': parse_openai_interface_field(yaml_text, 'default_prompt'),
+    }
 
 PLUGIN_SPECS = [
     {
@@ -375,6 +399,17 @@ def build_assets(plugin_root: Path, spec: dict) -> None:
 
 def build_plugin_manifest(spec: dict) -> dict:
     interface = dict(spec['interface'])
+    if len(spec['skills']) == 1:
+        source_meta = source_openai_metadata(spec['skills'][0])
+        if source_meta.get('short_description'):
+            interface['shortDescription'] = source_meta['short_description']
+        if source_meta.get('default_prompt'):
+            prompts = list(interface.get('defaultPrompt', []))
+            if prompts:
+                prompts[0] = source_meta['default_prompt']
+            else:
+                prompts = [source_meta['default_prompt']]
+            interface['defaultPrompt'] = prompts
     interface['brandColor'] = spec['color']
     interface['composerIcon'] = './assets/icon.png'
     interface['logo'] = './assets/logo.png'

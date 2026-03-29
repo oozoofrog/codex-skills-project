@@ -34,12 +34,30 @@ def parse_frontmatter(text: str):
     return meta, body
 
 
+def extract_markdown_section(body: str, title: str):
+    pattern = rf'(?ms)^## {re.escape(title)}\s*\n(.*?)(?=^## \S|\Z)'
+    match = re.search(pattern, body)
+    return match.group(1).strip() if match else None
+
+
+def normalize_multiline(text: str):
+    lines = [' '.join(line.split()) for line in text.strip().splitlines() if line.strip()]
+    return '\n'.join(lines)
+
+
 def load_text(path: Path):
     return path.read_text(encoding='utf-8', errors='ignore')
 
 
 def load_json(path: Path):
     return json.loads(load_text(path))
+
+
+def parse_openai_interface_field(yaml_text: str, field: str):
+    match = re.search(rf'(?m)^\s*{re.escape(field)}:\s*(.+?)\s*$', yaml_text)
+    if not match:
+        return ''
+    return match.group(1).strip().strip('"').strip("'")
 
 
 def add(findings, severity, where, message):
@@ -228,12 +246,70 @@ def main():
 
         skills_value = data.get('skills')
         skills_dir = validate_path_ref(plugin_root, skills_value, findings, str(rel), 'skills path')
+        packaged_skill_names = []
         if skills_dir is not None:
             packaged_skills = sorted(skills_dir.glob('*/SKILL.md'))
             if not packaged_skills:
                 add(findings, 'critical', str(rel), 'skills path exists but no packaged SKILL.md files found')
             else:
                 strengths.append(f'{plugin_name} packages {len(packaged_skills)} skill(s)')
+                for packaged_skill in packaged_skills:
+                    packaged_rel = packaged_skill.relative_to(target)
+                    source_skill = target / '.agents' / 'skills' / packaged_skill.parent.name / 'SKILL.md'
+                    packaged_skill_names.append(packaged_skill.parent.name)
+                    if not source_skill.exists():
+                        add(findings, 'warning', str(packaged_rel), f'packaged skill has no matching source skill: {source_skill.relative_to(target)}')
+                        continue
+
+                    packaged_text = load_text(packaged_skill)
+                    source_text = load_text(source_skill)
+                    _, packaged_body = parse_frontmatter(packaged_text)
+                    _, source_body = parse_frontmatter(source_text)
+                    packaged_review = extract_markdown_section(packaged_body, 'Review Harness')
+                    source_review = extract_markdown_section(source_body, 'Review Harness')
+
+                    if (packaged_review or source_review) and normalize_multiline(packaged_review or '') != normalize_multiline(source_review or ''):
+                        add(
+                            findings,
+                            'warning',
+                            str(packaged_rel),
+                            'packaged Review Harness section drifted from source skill '
+                            f'`{source_skill.relative_to(target)}`',
+                        )
+
+                    packaged_openai = packaged_skill.parent / 'agents' / 'openai.yaml'
+                    source_openai = source_skill.parent / 'agents' / 'openai.yaml'
+                    if packaged_openai.exists() and source_openai.exists():
+                        packaged_yaml = load_text(packaged_openai)
+                        source_yaml = load_text(source_openai)
+                        field_map = {
+                            'short_description': 'short_description',
+                            'default_prompt': 'default_prompt',
+                            'allow_implicit_invocation': 'allow_implicit_invocation',
+                        }
+                        for label, field in field_map.items():
+                            if field == 'allow_implicit_invocation':
+                                packaged_value = re.search(r'(?m)^\s*allow_implicit_invocation:\s*(true|false)\s*$', packaged_yaml)
+                                source_value = re.search(r'(?m)^\s*allow_implicit_invocation:\s*(true|false)\s*$', source_yaml)
+                                packaged_value = packaged_value.group(1) if packaged_value else ''
+                                source_value = source_value.group(1) if source_value else ''
+                            else:
+                                packaged_value = parse_openai_interface_field(packaged_yaml, field)
+                                source_value = parse_openai_interface_field(source_yaml, field)
+                            if packaged_value != source_value:
+                                add(
+                                    findings,
+                                    'warning',
+                                    str(packaged_openai.relative_to(target)),
+                                    f'packaged openai.yaml `{label}` drifted from source `{source_openai.relative_to(target)}`',
+                                )
+                    elif packaged_openai.exists() != source_openai.exists():
+                        add(
+                            findings,
+                            'warning',
+                            str(packaged_rel),
+                            f'packaged/source openai.yaml presence differs from `{source_openai.relative_to(target)}`',
+                        )
 
         mcp_value = data.get('mcpServers')
         if isinstance(mcp_value, str):
@@ -269,6 +345,31 @@ def main():
                 else:
                     for idx, shot in enumerate(screenshots, 1):
                         validate_path_ref(plugin_root, shot, findings, str(rel), f'interface.screenshots[{idx}]')
+
+        if len(packaged_skill_names) == 1:
+            source_openai = target / '.agents' / 'skills' / packaged_skill_names[0] / 'agents' / 'openai.yaml'
+            if source_openai.exists() and isinstance(interface, dict):
+                source_yaml = load_text(source_openai)
+                source_short = parse_openai_interface_field(source_yaml, 'short_description')
+                if source_short and interface.get('shortDescription') != source_short:
+                    add(
+                        findings,
+                        'warning',
+                        str(rel),
+                        'plugin interface.shortDescription drifted from source '
+                        f'`{source_openai.relative_to(target)}`',
+                    )
+                source_prompt = parse_openai_interface_field(source_yaml, 'default_prompt')
+                prompts = interface.get('defaultPrompt')
+                first_prompt = prompts[0] if isinstance(prompts, list) and prompts else ''
+                if source_prompt and first_prompt != source_prompt:
+                    add(
+                        findings,
+                        'warning',
+                        str(rel),
+                        'plugin interface.defaultPrompt[0] drifted from source '
+                        f'`{source_openai.relative_to(target)}`',
+                    )
 
         marketplace_entry = marketplace_plugins.get(plugin_name)
         if marketplace_plugins and marketplace_entry is None:
