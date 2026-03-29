@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import json
 import re
 import sys
@@ -164,8 +165,27 @@ def has_any_marker(text: str, markers):
     return any(marker in text or marker in lowered for marker in markers)
 
 
+def build_summary(target: Path, skills: list[Path], findings, strengths):
+    unique_strengths = sorted(dict.fromkeys(strengths))
+    return {
+        'report_type': 'codex-skill-audit',
+        'schema_version': 1,
+        'target': str(target),
+        'skills_found': len(skills),
+        'findings_count': len(findings),
+        'strengths_count': len(unique_strengths),
+        'findings': [{'severity': s, 'where': w, 'message': m} for s, w, m in findings],
+        'strengths': unique_strengths,
+    }
+
+
 def main():
-    target = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd().resolve()
+    parser = argparse.ArgumentParser(description='Audit a Codex skill repository.')
+    parser.add_argument('target', nargs='?', default='.', help='감사 대상 루트 (기본값: 현재 디렉터리)')
+    parser.add_argument('--json-out', help='machine summary JSON을 저장할 파일 경로')
+    args = parser.parse_args()
+
+    target = Path(args.target).resolve()
     findings = []
     strengths = []
 
@@ -341,21 +361,22 @@ def main():
     print()
 
     print('## Strengths')
-    if not strengths:
+    unique_strengths = sorted(dict.fromkeys(strengths))
+    if not unique_strengths:
         print('- None')
     else:
-        for item in sorted(dict.fromkeys(strengths)):
+        for item in unique_strengths:
             print(f'- {item}')
     print()
 
     print('## Machine summary')
-    summary = {
-        'target': str(target),
-        'skills_found': len(skills),
-        'findings': [{'severity': s, 'where': w, 'message': m} for s, w, m in findings],
-        'strengths': sorted(dict.fromkeys(strengths)),
-    }
+    summary = build_summary(target, skills, findings, strengths)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+    if args.json_out:
+        out_path = Path(args.json_out).expanduser().resolve()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

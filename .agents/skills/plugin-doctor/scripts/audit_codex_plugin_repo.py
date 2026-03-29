@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import json
 import re
 import sys
@@ -82,8 +83,29 @@ def validate_path_ref(plugin_root: Path, rel_path: str, findings, where: str, la
     return resolved
 
 
+def build_summary(target: Path, skill_files: list[Path], agent_files: list[Path], plugin_manifests: list[Path], findings, strengths):
+    unique_strengths = sorted(set(strengths))
+    return {
+        'report_type': 'plugin-doctor',
+        'schema_version': 1,
+        'target': str(target),
+        'skills_found': len(skill_files),
+        'custom_agents_found': len(agent_files),
+        'packaged_plugins_found': len(plugin_manifests),
+        'findings_count': len(findings),
+        'strengths_count': len(unique_strengths),
+        'findings': [{'severity': s, 'where': w, 'message': m} for s, w, m in findings],
+        'strengths': unique_strengths,
+    }
+
+
 def main():
-    target = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd().resolve()
+    parser = argparse.ArgumentParser(description='Audit a Codex plugin repository.')
+    parser.add_argument('target', nargs='?', default='.', help='감사 대상 루트 (기본값: 현재 디렉터리)')
+    parser.add_argument('--json-out', help='machine summary JSON을 저장할 파일 경로')
+    args = parser.parse_args()
+
+    target = Path(args.target).resolve()
     findings = []
     strengths = []
 
@@ -471,21 +493,21 @@ def main():
             print(f'- [{severity}] `{where}` — {message}')
     print()
     print('## Strengths')
-    if not strengths:
+    unique_strengths = sorted(set(strengths))
+    if not unique_strengths:
         print('- None')
     else:
-        for item in sorted(set(strengths)):
+        for item in unique_strengths:
             print(f'- {item}')
     print()
     print('## Machine summary')
-    print(json.dumps({
-        'target': str(target),
-        'skills_found': len(skill_files),
-        'custom_agents_found': len(agent_files),
-        'packaged_plugins_found': len(plugin_manifests),
-        'findings': [{'severity': s, 'where': w, 'message': m} for s, w, m in findings],
-        'strengths': sorted(set(strengths)),
-    }, ensure_ascii=False, indent=2))
+    summary = build_summary(target, skill_files, agent_files, plugin_manifests, findings, strengths)
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+    if args.json_out:
+        out_path = Path(args.json_out).expanduser().resolve()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

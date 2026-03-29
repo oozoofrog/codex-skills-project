@@ -24,6 +24,7 @@ description: AGENTS.md 기반 instruction 구조의 정합성을 검증합니다
 
 ## Use references
 - `../agent-context-guide/references/verification-guide.md`
+- `../../../docs/evaluator-output-contract.md`
 
 ## Verification stages
 1. **Reference integrity**
@@ -51,6 +52,9 @@ description: AGENTS.md 기반 instruction 구조의 정합성을 검증합니다
 - 자동 다음 행동: `pass`면 종료, `warning`이면 수정 후보 제시, `critical`이면 해당 문서를 block 처리하고 상위 스킬에 재작성 요청
 
 ## Output expectation
-- 단계별 검증 결과
-- 깨진 링크 / 오래된 명령 / 잘못된 주장 목록
-- 바로 수정할 파일 제안
+- `# Agent Context Verification Report`
+- `## Summary`
+- `## Findings`
+  - `critical / warning / info / strength`
+- `## Recommended fixes`
+- 필요 시 `## Machine summary`
