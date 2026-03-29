@@ -1,129 +1,187 @@
 # Local Codex Plugin Testing Guide
 
-이 문서는 현재 저장소의 **repo-local marketplace + local packaged plugins**를 점검하는 절차입니다.
+이 문서는 현재 저장소의 **repo-local marketplace + packaged plugins**를 점검하는 절차를
+두 가지 흐름으로 나눠 설명합니다.
 
-## 1. 패키지 재생성
+- **빠른 확인**: 처음 해보는 사람, 또는 변경 직후 최소 확인만 하고 싶을 때
+- **유지보수 전체 절차**: plugin metadata / packaged assets / smoke check까지 전부 다시 볼 때
+
+---
+
+## 1. 빠른 확인
+
+가장 자주 쓰는 순서는 아래 4단계입니다.
+
+```bash
+python3 scripts/sync_packaged_plugins.py
+python3 scripts/run_local_plugin_smoke_checks.py
+python3 scripts/run_local_plugin_load_assistant.py --run-smoke
+```
+
+그 다음:
+
+1. **Codex를 현재 저장소 루트에서 다시 시작**
+2. 로컬 plugin catalog에서 plugin이 보이는지 확인
+3. 원하는 plugin 하나에서 starter prompt 1개 실행
+
+### 빠른 확인에서 꼭 보는 것
+
+- `.agents/plugins/marketplace.json`이 현재 packaged plugins와 맞는지
+- `plugins/*/.codex-plugin/plugin.json` 경로 참조가 깨지지 않았는지
+- packaged assets가 모두 존재하는지
+- Codex UI에서 실제로 plugin이 로드되는지
+
+### 빠른 확인용 starter prompts
+
+- `agent-context`
+  - “이 저장소의 AGENTS.md 구조를 제안해줘”
+- `app-automation`
+  - “부팅된 시뮬레이터 목록을 보여줘”
+- `apple-craft`
+  - “SwiftUI 뷰 빌드 에러 원인 분석해줘”
+- `gpt-research`
+  - “이 디렉토리를 외부 GPT 리서치용 프롬프트로 정리해줘”
+- `hey-codex`
+  - “별도 Codex CLI로 세컨드 오피니언 받아와”
+- `macos-release`
+  - “이 프로젝트 릴리스 준비 상태를 점검해줘”
+- `plugin-doctor`
+  - “이 저장소의 plugin/skill 구조를 감사해줘”
+
+---
+
+## 2. 유지보수 전체 절차
+
+아래는 packaged plugin / marketplace / assets / 로컬 로딩까지 전부 다시 보는 흐름입니다.
+
+### Step 1. packaged plugin 재생성
 
 ```bash
 python3 scripts/sync_packaged_plugins.py
 ```
 
 언제 실행하나:
-- `.agents/skills/`의 내용이 바뀌었을 때
+
+- `.agents/skills/` 내용이 바뀌었을 때
 - plugin manifest 메타데이터를 바꿨을 때
 - assets를 다시 만들었을 때
+- browser/live capture를 반영했을 때
 
-## 2. 정적 검증
+### Step 2. 정적 검증
 
-### 원클릭 스모크 체크
+가장 쉬운 기본 명령:
+
 ```bash
 python3 scripts/run_local_plugin_smoke_checks.py
 ```
 
+필요하면 개별 검증도 돌립니다.
 
-### plugin 구조 감사
 ```bash
 python3 .agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py .
-```
-
-### skill 구조 감사
-```bash
 python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py .
 ```
 
-### JSON 파싱 스모크 체크
-```bash
-python3 - <<'PY'
-import json
-from pathlib import Path
-paths=[Path('.agents/plugins/marketplace.json')] + sorted(Path('plugins').glob('*/.codex-plugin/plugin.json')) + sorted(Path('plugins').glob('*/.mcp.json'))
-for p in paths:
-    json.loads(p.read_text())
-    print('OK', p)
-PY
-```
+무엇을 확인하나:
 
-## 3. Codex 로컬 로딩 확인
+- JSON 파싱
+- manifest path validity
+- packaged assets 존재 여부
+- plugin-doctor / skill-audit findings
 
-### 로딩 확인 보조 체크리스트 생성
+### Step 3. 로컬 로딩 체크리스트 생성
+
 ```bash
 python3 scripts/run_local_plugin_load_assistant.py --run-smoke
 ```
 
-1. Codex를 현재 저장소 루트에서 다시 시작한다.
-2. repo-level instruction과 skill discovery가 정상인지 확인한다.
-3. local plugin catalog를 다시 읽게 한다.
-4. `Codex Skills Local` 카탈로그 또는 동등한 로컬 plugin 목록에서 plugin이 보이는지 확인한다.
+이 스크립트는:
 
-## 4. 설치/활성화 스모크 테스트
+- 정적 smoke check를 한 번 더 돌리고
+- `reports/local-plugin-load-checklist-*.md`를 생성해
+- 실제 UI 확인 순서를 정리해 줍니다.
 
-각 plugin에 대해 최소 1개 프롬프트를 실행한다.
+### Step 4. Codex UI 로딩 확인
 
-### agent-context
-- “이 저장소의 AGENTS.md 구조를 제안해줘”
+1. Codex를 **현재 저장소 루트에서 다시 시작**
+2. repo-level instruction과 skill discovery가 정상인지 확인
+3. local plugin catalog를 다시 읽게 함
+4. `Codex Skills Local` 또는 동등한 로컬 plugin 목록에서 plugin이 보이는지 확인
 
-### app-automation
-- “부팅된 시뮬레이터 목록을 보여줘”
-- 필요 시 baepsae 연결 확인
+### Step 5. plugin별 최소 실행 확인
 
-### apple-craft
-- “SwiftUI 뷰 빌드 에러 원인 분석해줘”
+각 plugin에 대해 starter prompt 1개 이상 실행합니다.
 
-### gpt-research
-- “이 디렉토리를 외부 GPT 리서치용 프롬프트로 정리해줘”
+중점:
 
-### hey-codex
-- “별도 Codex CLI로 세컨드 오피니언 받아와”
+- catalog에 실제로 노출되는지
+- detail panel의 아이콘/로고/스크린샷이 보이는지
+- 첫 prompt가 의도대로 시작되는지
 
-### macos-release
-- “이 프로젝트 릴리스 준비 상태를 점검해줘”
+---
 
-### plugin-doctor
-- “이 저장소의 plugin/skill 구조를 감사해줘”
+## 3. assets / capture 갱신
 
-## 5. Assets 점검
-
-각 packaged plugin에 대해 다음 파일이 존재하는지 확인한다.
-
-- `assets/icon.svg`
-- `assets/logo.svg`
-- `assets/screenshot.svg`
-
-또한 `.codex-plugin/plugin.json`의 `interface.composerIcon`, `logo`, `screenshots[]`가 실제 파일과 일치하는지 확인한다.
-
-### 외부 브라우저 캡처 반영
-
-외부 브라우저에서 plugin detail/gallery를 캡처했다면 다음 명령으로 shared browser capture로 반영한다.
+### browser capture 반영
 
 ```bash
 python3 scripts/update_browser_capture_assets.py <plugin-name> /path/to/browser-capture.png
 python3 scripts/sync_packaged_plugins.py
 ```
 
-## 6. 회귀 체크 포인트
+### live capture 반영
 
-다음 변경 후에는 반드시 다시 점검한다.
+```bash
+python3 scripts/update_live_capture_assets.py /path/to/codex-live-capture.png
+python3 scripts/sync_packaged_plugins.py
+```
+
+### assets에서 꼭 보는 것
+
+- `assets/icon.svg`, `assets/icon.png`
+- `assets/logo.svg`, `assets/logo.png`
+- `assets/screenshot.svg`, `assets/screenshot.png`
+- optional:
+  - `assets/browser-capture.png`
+  - `assets/live-capture.png`
+
+또한 `.codex-plugin/plugin.json`의 아래 필드가 실제 파일과 맞는지 확인합니다.
+
+- `interface.composerIcon`
+- `interface.logo`
+- `interface.screenshots[]`
+
+---
+
+## 4. 언제 다시 점검해야 하나
+
+다음 변경 후에는 최소한 **빠른 확인**, 가능하면 **유지보수 전체 절차**를 다시 실행합니다.
 
 - plugin 이름 변경
 - packaged plugin 추가/삭제
 - marketplace entry 순서 변경
 - plugin manifest의 `skills`, `mcpServers`, `interface` 수정
 - skill 경로 구조 변경
+- browser/live capture 추가 또는 교체
 
-## 7. 권장 순서
+---
+
+## 5. 유지보수용 추천 명령 순서
 
 ```bash
 python3 scripts/sync_packaged_plugins.py
-python3 .agents/skills/plugin-doctor/scripts/audit_codex_plugin_repo.py .
-python3 .agents/skills/codex-skill-audit/scripts/audit_codex_skill_repo.py .
+python3 scripts/run_local_plugin_smoke_checks.py
+python3 scripts/run_local_plugin_load_assistant.py --run-smoke
 ```
 
-그다음 Codex를 재시작하고 로컬 로딩을 수동 확인한다.
+그 다음 Codex를 재시작하고, generated checklist를 따라 UI에서 수동 확인합니다.
 
+---
 
-## 8. Live capture 교체
+## 6. 관련 파일
 
-```bash
-python3 scripts/update_live_capture_assets.py /path/to/codex-live-capture.png
-python3 scripts/sync_packaged_plugins.py
-```
+- `scripts/sync_packaged_plugins.py`
+- `scripts/run_local_plugin_smoke_checks.py`
+- `scripts/run_local_plugin_load_assistant.py`
+- `plugins/README.md`
+- `.agents/plugins/marketplace.json`
