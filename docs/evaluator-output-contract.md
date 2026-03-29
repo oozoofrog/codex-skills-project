@@ -89,6 +89,7 @@ stdout에는 여전히 사람이 읽는 보고서를 출력하고,
 ## 현재 적용 대상
 
 - `apple-review`
+- `agent-context-audit`
 - `codex-skill-audit`
 - `plugin-doctor`
 - `agent-context-verify` 같은 evaluator-native verification skill의 문서 출력 가이드
