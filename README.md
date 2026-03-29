@@ -21,6 +21,7 @@
 
 - Latest release: https://github.com/oozoofrog/codex-skills-project/releases/latest
 - CHANGELOG: `CHANGELOG.md`
+- release workflow: `docs/release-workflow.md`
 - v0.2.0 release notes: `docs/release-notes-v0.2.0.md`
 - v0.2.0 announcement draft: `docs/release-announcement-v0.2.0.md`
 - v0.3.0 candidate roadmap: `docs/roadmap-v0.3.0.md`
