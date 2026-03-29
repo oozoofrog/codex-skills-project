@@ -1,117 +1,166 @@
-# v0.4.0 후보 작업 목록
+# v0.4.0 준비 상태
 
-이 문서는 **확정 로드맵이 아니라 후보 작업 목록**입니다.  
-`v0.3.0`에서 정리한 research / install validation / audit parity / release helper 기반을 바탕으로,  
-다음 단계에서 무엇을 더 자동화하고 무엇을 더 안정화할지 정리합니다.
+이 문서는 **후보 작업 목록**이 아니라, 현재 `main` 기준으로  
+`v0.4.0` 준비 상태를 **완료 / 진행 기반 / 남은 후보**로 다시 정리한 상태판입니다.
 
-## 목표
+기준:
 
-`v0.3.0`이 운영 모델과 반복 가능한 도구를 추가했다면,  
-`v0.4.0`에서는 이를 **더 자동화되고, 더 재현 가능하며, 더 기계적으로 검증 가능한 상태**로 밀어붙이는 것이 목표입니다.
+- `v0.3.0` 공개 이후 main에 병합된 작업
+- 현재 smoke / audit / packaged plugin 상태
+- 다음에 실제로 착수 가치가 있는 남은 항목
 
-핵심 방향은 다음 3가지입니다.
+## 현재 요약
 
-1. release / install / plugin parity 검증을 더 자동화하기
-2. evaluator 출력과 review harness 계약을 더 구조화하기
-3. 장기 루프와 로컬 테스트 흐름의 재현성을 높이기
+`v0.4.0` 후보로 잡았던 큰 축은 상당 부분 main에 반영되었습니다.
 
-## 후보 작업
+완료된 축:
 
-### 1. release helper smoke check / CI 연동
+- release helper 도입 및 smoke / CI 연동
+- global install validation regression automation
+- packaged plugin parity 확장
+  - `SKILL.md`
+  - `openai.yaml`
+  - single-skill manifest
+  - multi-skill manifest
+  - README / optional assets
+- evaluator output contract / schema 기반 정리
+- `agent-context-verify` deterministic script 추가
+- `goal-research-loop` `reconcile` / `resume` / runtime status 보강
+- local plugin testing 문서 단순화
 
-`scripts/release_helper.py`는 현재 `check / plan / publish`를 제공하지만,  
-아직 정적 smoke check 또는 CI 검증 단계에 연결되어 있지는 않습니다.
+즉, 남은 일은 **새 기반 작업**보다는 **세부 템플릿화 / 회귀 테스트 강화 / 반자동 UI 검증** 쪽에 가깝습니다.
 
-다음 단계 후보:
+---
 
-- `scripts/run_release_smoke_checks.py` 추가 또는 기존 smoke check에 release helper 검증 포함
-- 샘플 버전/문서 fixture 기반으로 `check` / `plan` 회귀 검증
-- `draft`와 `publish` 경로의 명령 생성 차이 자동 비교
-- `docs/release-workflow.md`와 helper CLI help 출력의 정합성 검사
+## 완료된 항목
 
-### 2. packaged plugin parity를 README / assets까지 확장
+### 1. release / install / plugin parity 검증 자동화
 
-`v0.3.0`에서는 packaged `SKILL.md`, packaged `openai.yaml`, single-skill plugin manifest metadata drift를 잡게 했습니다.  
-다음 단계에서는 아래도 후보입니다.
+- `scripts/release_helper.py`
+- `scripts/run_release_smoke_checks.py`
+- `scripts/run_global_install_smoke_checks.py`
+- `scripts/run_local_plugin_smoke_checks.py`
+- `.github/workflows/release-smoke.yml`
+- `.github/workflows/install-smoke.yml`
 
-- packaged plugin `README.md`의 핵심 문구 drift 탐지
-- screenshots / browser capture / live capture 존재 정책 정리
-- generated assets 재생성 후 메타데이터 변화 힌트 추가
-- multi-skill plugin(`agent-context`, `apple-craft`)의 prompt/description parity rules 확장
+효과:
 
-### 3. evaluator output template / schema 고정
+- release / install / packaged plugin 레이어에 대해 CI 기준선을 확보
+- draft/publish 분기, populated install, broken install 같은 회귀 포인트를 자동 점검
 
-문서 수준의 `Review Harness` 선언은 강화됐지만,  
-각 evaluator-native skill의 출력 형식은 아직 완전히 고정돼 있지 않습니다.
+### 2. packaged plugin parity 확장
 
-후보:
+- `plugin-doctor` drift 검사 강화
+- `scripts/packaged_plugin_parity.py`
+- multi-skill plugin parity 규칙 반영
+  - `agent-context`
+  - `apple-craft`
+- README / optional assets / screenshots parity 반영
 
-- `codex-skill-audit` findings JSON schema 또는 markdown template 고정
-- `agent-context-verify`의 링크/명령/주장 3단 리포트 형식 고정
-- `apple-review`의 severity / 위치 / 영향 / 수정 방향 포맷 고정
-- `plugin-doctor`의 packaged/source drift findings 형식 고정
+효과:
 
-### 4. global install validation을 CI/fixture 수준으로 승격
+- packaged/source drift의 사각지대가 크게 줄어듦
+- generator가 만든 packaged outputs와 source skill metadata의 정합성이 높아짐
 
-`v0.3.0`에서 `--dry-run`과 `--validate-installed`는 개선됐지만,  
-지금은 주로 manual smoke check에 의존합니다.
+### 3. evaluator output 구조화
 
-후보:
+- `docs/evaluator-output-contract.md`
+- `codex-skill-audit` schema + `--json-out`
+- `plugin-doctor` schema + `--json-out`
+- `agent-context-verify` schema + deterministic script
 
-- temp destination fixture 기반 install validation regression check
-- populated `~/.codex/skills` 시뮬레이션을 위한 isolated test destination
-- alias / dependency / frontmatter drift를 fixture 기반으로 다시 검증
-- install helper 결과를 CI에서 summary 형태로 남기기
+효과:
 
-### 5. goal-research-loop runner 안정화
+- 사람 읽기용 Markdown + machine summary JSON artifact 패턴이 정착
+- evaluator-native skill 결과를 후속 자동화나 보고 흐름에 연결하기 쉬워짐
 
-`goal-research-loop`는 usable state에 도달했지만,  
-장기적으로는 host-managed artifact 흐름을 더 단단하게 만들 여지가 있습니다.
+### 4. goal-research-loop runner 안정화
 
-후보:
+- `reconcile`
+- `resume`
+- `runtime/status.json`
+- orphan round artifact 복구
+- pending round 보호
 
-- structured result append와 ledger 관리 회귀 점검
-- round artifact 생성/종료 시점 일관성 강화
-- runner failure / timeout / interrupted turn 복구 흐름 정리
-- lightweight / standard prompt profile 차이 검증
+효과:
 
-### 6. local plugin testing 문서 단순화
+- interrupted run 이후 이어받기 품질 개선
+- round artifact를 덮어쓰는 위험 감소
 
-현재 문서와 스크립트는 충분히 강하지만,  
-사용 순서를 더 짧고 분명하게 만들 여지가 있습니다.
+### 5. local plugin testing 문서 단순화
 
-후보:
+- `docs/local-plugin-testing.md`
+- `scripts/run_local_plugin_load_assistant.py` 문구 정렬
 
-- `docs/local-plugin-testing.md`를 install → sync → smoke → restart → verify 순서로 재정리
-- live capture / browser capture 갱신 절차 압축
-- “처음 해보는 사람용” 최소 절차와 “유지보수용” 전체 절차를 분리
+효과:
 
-## 우선순위 초안
+- 처음 해보는 사람용 quick path와 유지보수용 full path가 분리됨
+- generated checklist와 문서 순서가 일치함
+
+---
+
+## 남은 후보
+
+### 1. 도메인별 evaluator 템플릿 세분화
+
+아직 남은 후보:
+
+- `apple-review`
+  - severity / file / impact / fix direction 형식 고정
+- `agent-context-audit`
+  - density / duplication / coverage 중심 템플릿 고정
+- `plugin-doctor`
+  - drift finding grouping / summary 포맷 고정
+- `codex-skill-audit`
+  - recommended fixes 생성 포맷 세분화
+
+이유:
+
+- 공통 contract는 생겼지만, 스킬별 특화 템플릿은 더 다듬을 수 있음
+
+### 2. goal-research-loop 회귀 테스트 자동화
+
+아직 남은 후보:
+
+- timeout / interrupted turn fixture
+- `prompt_profile=standard|lightweight` 차이 회귀 검증
+- runtime status / ledger consistency regression test
+
+이유:
+
+- 기능은 들어갔지만, runner의 세부 회귀 테스트는 더 보강할 여지가 있음
+
+### 3. local plugin UI 반자동 검증
+
+아직 남은 후보:
+
+- catalog 노출 여부 반자동 확인
+- detail panel icon / logo / screenshots 확인 자동화
+- starter prompt smoke 결과 구조화
+
+이유:
+
+- 정적 레이어는 강하지만 실제 UI 확인은 아직 사람이 많이 담당
+
+---
+
+## 현재 추천 우선순위
 
 ### P1
 
-- release helper smoke check / CI 연동
-- packaged plugin parity 범위 확장
-- evaluator output template / schema 고정
+- 도메인별 evaluator 템플릿 세분화
 
 ### P2
 
-- global install validation regression automation
-- goal-research-loop runner 안정화
+- goal-research-loop 회귀 테스트 자동화
 
 ### P3
 
-- local plugin testing 문서 단순화
+- local plugin UI 반자동 검증
 
-## 제외하거나 신중히 볼 항목
+---
 
-- release helper를 즉시 범용 배포 도구로 일반화하는 것
-- multi-skill plugin parity를 과도하게 엄격하게 만들어 false positive를 늘리는 것
-- evidence 없이 evaluator 출력 형식만 복잡하게 만드는 것
+## 운영 메모
 
-## 제안되는 다음 이슈 단위
-
-1. release helper smoke check / regression automation
-2. packaged plugin README / asset parity 확장
-3. evaluator output template 고정
-4. goal-research-loop runner artifact 안정화
+- 현재 문서는 “남은 후보”만 보려는 사람에게 더 적합한 형태로 갱신된 상태판입니다.
+- `v0.4.0`를 실제로 자를지 판단할 때는 이 문서와 현재 smoke/audit 결과를 함께 보는 편이 좋습니다.
