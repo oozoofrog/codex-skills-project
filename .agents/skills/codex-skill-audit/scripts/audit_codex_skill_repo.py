@@ -165,6 +165,50 @@ def has_any_marker(text: str, markers):
     return any(marker in text or marker in lowered for marker in markers)
 
 
+def grouped_findings(findings):
+    groups = {
+        'frontmatter': [],
+        'operator_sections': [],
+        'review_harness': [],
+        'openai_yaml': [],
+        'hygiene': [],
+        'other': [],
+    }
+    for severity, where, message in findings:
+        lowered = message.lower()
+        bucket = 'other'
+        if 'frontmatter' in lowered or 'description' in lowered or 'kebab-case' in lowered:
+            bucket = 'frontmatter'
+        elif 'operator section' in lowered or 'quick start' in lowered or 'output expectation' in lowered:
+            bucket = 'operator_sections'
+        elif 'review harness' in lowered or '평가축' in lowered or '자동 다음 행동' in lowered or 'mode `' in lowered:
+            bucket = 'review_harness'
+        elif 'openai.yaml' in lowered or 'allow_implicit_invocation' in lowered:
+            bucket = 'openai_yaml'
+        elif 'readme.md' in lowered or 'references/' in lowered or 'long (' in lowered:
+            bucket = 'hygiene'
+        groups[bucket].append({'severity': severity, 'where': where, 'message': message})
+    return groups
+
+
+def recommended_fixes(findings):
+    fixes: list[str] = []
+    grouped = grouped_findings(findings)
+    if grouped['frontmatter']:
+        fixes.append('frontmatter name/description과 kebab-case 규칙부터 정리합니다.')
+    if grouped['operator_sections']:
+        fixes.append('When to use / Do not use when / Quick start / Output expectation 섹션을 보강합니다.')
+    if grouped['review_harness']:
+        fixes.append('Review Harness mode, 평가축, 자동 다음 행동을 실제 스킬 위험도와 맞게 수정합니다.')
+    if grouped['openai_yaml']:
+        fixes.append('openai.yaml 메타데이터와 explicit-only / implicit invocation 정책을 정렬합니다.')
+    if grouped['hygiene']:
+        fixes.append('불필요한 README, 과도한 본문 길이, references 분리 상태를 정리합니다.')
+    if not fixes and findings:
+        fixes.append('warning / critical finding을 우선순위 순으로 수정합니다.')
+    return fixes
+
+
 def build_summary(target: Path, skills: list[Path], findings, strengths):
     unique_strengths = sorted(dict.fromkeys(strengths))
     return {
@@ -175,6 +219,8 @@ def build_summary(target: Path, skills: list[Path], findings, strengths):
         'findings_count': len(findings),
         'strengths_count': len(unique_strengths),
         'findings': [{'severity': s, 'where': w, 'message': m} for s, w, m in findings],
+        'grouped_findings': grouped_findings(findings),
+        'recommended_fixes': recommended_fixes(findings),
         'strengths': unique_strengths,
     }
 
@@ -358,6 +404,23 @@ def main():
     else:
         for severity, where, message in findings:
             print(f'- [{severity}] `{where}` — {message}')
+    print()
+    print('## Grouped summary')
+    grouped = grouped_findings(findings)
+    if not any(grouped.values()):
+        print('- None')
+    else:
+        for key, items in grouped.items():
+            if items:
+                print(f'- `{key}`: {len(items)}')
+    print()
+    print('## Recommended fixes')
+    fixes = recommended_fixes(findings)
+    if not fixes:
+        print('1. 현재 구조를 유지합니다.')
+    else:
+        for idx, item in enumerate(fixes, start=1):
+            print(f'{idx}. {item}')
     print()
 
     print('## Strengths')

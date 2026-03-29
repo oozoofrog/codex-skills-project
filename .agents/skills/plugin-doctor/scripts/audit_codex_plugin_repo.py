@@ -73,6 +73,28 @@ def add(findings, severity, where, message):
     findings.append((severity, where, message))
 
 
+def grouped_findings(findings):
+    groups = {
+        'manifest_and_marketplace': [],
+        'packaged_skill_drift': [],
+        'readme_and_assets': [],
+        'legacy_and_custom_agents': [],
+        'other': [],
+    }
+    for severity, where, message in findings:
+        bucket = 'other'
+        if 'marketplace' in where or 'plugin.json' in where or 'mcp' in where:
+            bucket = 'manifest_and_marketplace'
+        if 'packaged' in message or 'openai.yaml' in where or 'defaultPrompt' in message or 'shortDescription' in message:
+            bucket = 'packaged_skill_drift'
+        if 'README' in message or 'assets' in message or 'screenshots' in message:
+            bucket = 'readme_and_assets'
+        if '.claude-plugin' in where or 'CLAUDE.md' in where or 'custom agent' in message:
+            bucket = 'legacy_and_custom_agents'
+        groups[bucket].append({'severity': severity, 'where': where, 'message': message})
+    return groups
+
+
 def validate_path_ref(plugin_root: Path, rel_path: str, findings, where: str, label: str):
     if not isinstance(rel_path, str):
         add(findings, 'warning', where, f'{label} should be a relative string path')
@@ -99,6 +121,7 @@ def build_summary(target: Path, skill_files: list[Path], agent_files: list[Path]
         'findings_count': len(findings),
         'strengths_count': len(unique_strengths),
         'findings': [{'severity': s, 'where': w, 'message': m} for s, w, m in findings],
+        'grouped_findings': grouped_findings(findings),
         'strengths': unique_strengths,
     }
 
@@ -505,6 +528,15 @@ def main():
     else:
         for severity, where, message in findings:
             print(f'- [{severity}] `{where}` — {message}')
+    print()
+    print('## Grouped summary')
+    grouped = grouped_findings(findings)
+    for key, items in grouped.items():
+        if not items:
+            continue
+        print(f'- `{key}`: {len(items)}')
+    if not any(grouped.values()):
+        print('- None')
     print()
     print('## Strengths')
     unique_strengths = sorted(set(strengths))
