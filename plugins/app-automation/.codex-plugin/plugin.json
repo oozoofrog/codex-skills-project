@@ -14,7 +14,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "App Automation",
-    "shortDescription": "Automate iOS Simulator and macOS apps",
+    "shortDescription": "Automate iOS Simulator and macOS apps with baepsae",
     "longDescription": "Inspect UI trees, interact with simulator or macOS apps, and capture screenshots or recordings as evidence for repeatable automation flows with baepsae.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
@@ -25,7 +25,7 @@
       "MCP"
     ],
     "defaultPrompt": [
-      "Analyze the current simulator UI tree and tell me what is visible.",
+      "Use baepsae to inspect UI trees, interact with iOS Simulator or macOS apps, and capture screenshots or recordings as evidence for repeatable multi-step automation flows.",
       "Launch the app in the booted simulator and capture a screenshot as evidence.",
       "Automate a login flow and report where it fails with UI evidence."
     ],

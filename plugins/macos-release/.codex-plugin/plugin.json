@@ -14,7 +14,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "macOS Release",
-    "shortDescription": "Prepare and publish macOS releases with verification gates",
+    "shortDescription": "Automate macOS release prep with verification gates",
     "longDescription": "Guide or automate version bumps, builds, packaging, local install verification, GitHub Releases, and Homebrew publishing for macOS software with explicit verification gates.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
@@ -24,7 +24,7 @@
       "Packaging"
     ],
     "defaultPrompt": [
-      "Prepare a dry-run release plan for this macOS app.",
+      "Guide or automate macOS release work with verification gates: version bump, build, DMG/ZIP packaging, local install verification, then GitHub release and Homebrew publishing.",
       "Review this repository for missing release automation and verification steps.",
       "Set up a release script for build, DMG, local validation, GitHub Release, and Homebrew."
     ],

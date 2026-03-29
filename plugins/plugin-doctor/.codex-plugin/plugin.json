@@ -14,7 +14,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Plugin Doctor",
-    "shortDescription": "Audit Codex plugin and skill repositories with evidence",
+    "shortDescription": "Audit Codex plugin and skill repositories with manifest evidence",
     "longDescription": "Validate repo-local skills, optional packaged plugins, marketplace metadata, custom agents, and evidence-backed review harness conventions while flagging stale Claude-specific leftovers.",
     "developerName": "codex-skills-project",
     "category": "Productivity",
@@ -24,7 +24,7 @@
       "Metadata"
     ],
     "defaultPrompt": [
-      "Audit this repository for Codex plugin and skill structure issues.",
+      "Audit a Codex plugin or skill repository for official structure, legacy Claude artifacts, plugin manifests, custom agents, repo-local skill hygiene, and evidence-backed findings.",
       "Check whether packaged plugins and marketplace metadata are consistent.",
       "Find stale Claude-specific artifacts or packaging drift that should be removed or documented."
     ],
