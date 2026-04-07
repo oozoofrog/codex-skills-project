@@ -192,6 +192,7 @@ python3 scripts/install_global_skills.py --list
 - `gpt-research` — 외부 GPT/deep research로 넘길 프롬프트와 컨텍스트 패키지 생성
 - `goal-research-loop` — objective 기반 반복 실험 루프 운영, contract/ledger/state snapshot 유지 (`scripts/goal-research-loop.sh`, `scripts/codex_goal_research_loop.py` 포함)
 - `hey-codex`
+- `karpathy-wiki` — Karpathy의 LLM Wiki 패턴을 tool-agnostic markdown/git knowledge base로 설계·부트스트랩
 - `plugin-doctor`
 
 ## 저장소 구조
@@ -215,6 +216,7 @@ codex-skills-project/
 │       ├── gpt-research/
 │       ├── goal-research-loop/
 │       ├── hey-codex/
+│       ├── karpathy-wiki/
 │       ├── macos-release/
 │       └── plugin-doctor/
 ├── .codex/

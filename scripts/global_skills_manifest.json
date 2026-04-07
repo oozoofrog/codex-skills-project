@@ -50,6 +50,9 @@
       "source": "hey-codex"
     },
     {
+      "source": "karpathy-wiki"
+    },
+    {
       "source": "macos-release",
       "install_name": "ooz-macos-release",
       "alias_reason": "Codex 기본 제공 `macos-release` 스킬과의 이름 충돌을 피하기 위한 별칭입니다."
